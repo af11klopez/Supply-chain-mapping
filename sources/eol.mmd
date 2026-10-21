@@ -1,0 +1,264 @@
+
+flowchart TB
+
+    %% =====================================================
+    %% EXTERNAL NETWORK — EV BATTERY END-OF-LIFE AND RECOVERY
+    %% =====================================================
+
+    subgraph EOL_S1["EOL-1 — VEHICLE RETIREMENT AND BATTERY REMOVAL"]
+        direction TB
+
+        EOL_IN_NMC["Finished NMC-based EV - Tier 9"]
+        EOL_IN_NCA["Finished NCA-based EV - Tier 9"]
+
+        EOL_IN_NMC --> EOL_USE["Vehicle use phase"]
+        EOL_IN_NCA --> EOL_USE
+
+        EOL_USE -->|"Vehicle reaches end of service"| EOL_COL["End-of-life vehicle collection"]
+        EOL_USE -->|"Battery requires replacement"| EOL_BREP["Battery replacement / removal"]
+
+        EOL_COL --> EOL_ELVID["Vehicle identification and treatment documentation"]
+        EOL_ELVID --> EOL_SAFE["Vehicle electrical isolation and safe access"]
+        EOL_SAFE --> EOL_DISC["Battery HV / LV and thermal disconnection"]
+        EOL_DISC --> EOL_REMOVE["Battery pack removal from vehicle"]
+
+        EOL_REMOVE -->|"Removed battery pack"| EOL_RECV["Retired battery receiving"]
+        EOL_BREP -->|"Removed battery pack"| EOL_RECV
+
+        EOL_REMOVE -->|"Battery-free vehicle"| EOL_VEH["Remaining vehicle depollution and materials recovery"]
+    end
+
+    subgraph EOL_S2["EOL-2 — BATTERY DIAGNOSTICS AND ROUTE SELECTION"]
+        direction TB
+
+        EOL_RECV --> EOL_IDENT["Battery identification and traceability checks"]
+        EOL_IDENT --> EOL_VIS["Visual inspection and damage assessment"]
+
+        EOL_VIS -->|"Damaged / unstable battery"| EOL_HAZ["Controlled hazardous-battery handling"]
+        EOL_HAZ --> EOL_HROUTE["Specialist safe recycling treatment"]
+
+        EOL_VIS -->|"Battery suitable for further assessment"| EOL_DIAG["Electrical diagnosis and BMS data evaluation"]
+
+        EOL_DIAG --> EOL_SOH["State-of-health and performance assessment"]
+        EOL_SOH --> EOL_DEC["Battery reuse / recovery route selection"]
+
+        EOL_DEC -->|"Repair or refurbishment viable"| EOL_RP["Pack or module repair / refurbishment"]
+
+        EOL_DEC -->|"Second-life use viable"| EOL_RU["Second-life battery preparation"]
+
+        EOL_DEC -->|"Material recycling selected"| EOL_RCY["Battery recycling preparation"]
+    end
+
+    subgraph EOL_S3["EOL-3 — REUSE, REFURBISHMENT AND SECOND LIFE"]
+        direction TB
+
+        EOL_RP --> EOL_FAULT["Fault localisation and component assessment"]
+        EOL_FAULT --> EOL_FIX["Approved component repair / replacement"]
+        EOL_FIX --> EOL_RETEST["Electrical and safety requalification"]
+        EOL_RETEST -->|"Qualified repaired battery"| EOL_RETURN["Repaired battery / module for approved reuse"]
+        EOL_RETEST -->|"Failed requalification"| EOL_RCY
+
+        EOL_RU --> EOL_SORT["Battery capacity and resistance matching"]
+        EOL_SORT --> EOL_RECONF["Application-specific electrical reconfiguration"]
+        EOL_RECONF --> EOL_BMS["BMS and protection-system integration"]
+        EOL_BMS --> EOL_QUAL["Second-life system qualification"]
+        EOL_QUAL --> EOL_SECOND["SECOND-LIFE BATTERY SYSTEM"]
+
+        EOL_SECOND -->|"At eventual second-life retirement"| EOL_RCY
+    end
+
+    subgraph EOL_S4["EOL-4 — PACK, MODULE AND CELL DISASSEMBLY"]
+        direction TB
+
+        EOL_RCY --> EOL_ARCH["Battery architecture identification"]
+        EOL_ARCH --> EOL_PACKSAFE["Safe pack-level preparation and de-energisation"]
+
+        EOL_PACKSAFE -->|"Conventional CTM pack"| EOL_CTM["CTM pack disassembly line"]
+        EOL_PACKSAFE -->|"Cell-to-pack architecture"| EOL_CTP["CTP architecture-specific disassembly"]
+
+        EOL_CTM --> EOL_OPEN["Pack cover removal"]
+        EOL_OPEN --> EOL_HVD["HV cables and connectors disconnection"]
+        EOL_HVD --> EOL_BMSD["BMS and module harness removal"]
+        EOL_BMSD --> EOL_MOD["Module separation from pack housing"]
+
+        EOL_MOD -->|"Recovered modules"| EOL_MOPEN["Module enclosure opening"]
+        EOL_MOPEN --> EOL_BUS["Busbar / cell connector separation"]
+        EOL_BUS --> EOL_SIDE["Module supports and side-panel removal"]
+        EOL_SIDE --> EOL_CELLEX["Individual cell extraction"]
+
+        EOL_CTP --> EOL_CTPACC["Architecture-specific pack opening and accessibility assessment"]
+        EOL_CTPACC --> EOL_CTPJOIN["Cell-connector, adhesive and structural joint separation"]
+        EOL_CTPJOIN --> EOL_CTPEX["Cell or cell-cluster recovery"]
+
+        EOL_CELLEX --> EOL_CELLS["Recovered lithium-ion battery cells"]
+        EOL_CTPEX --> EOL_CELLS
+
+        EOL_MOD -->|"Cooling and structural parts"| EOL_PARTS["Metal, plastic and cooling-component recovery"]
+        EOL_CTPJOIN -->|"Separated structural components"| EOL_PARTS
+    end
+
+    subgraph EOL_S5["EOL-5 — RECYCLING PRETREATMENT AND MECHANICAL SEPARATION"]
+        direction TB
+
+        EOL_CELLS --> EOL_CHEM["Cell chemistry and form-factor identification"]
+        EOL_HROUTE --> EOL_RISK["Specialist hazard-controlled preparation"]
+        EOL_RISK --> EOL_CHEM
+
+        EOL_CHEM --> EOL_ENERGY["Controlled discharge / residual-energy management"]
+        EOL_ENERGY --> EOL_SELECT["Recycling process route selection"]
+
+        EOL_SELECT -->|"Mechanical preprocessing"| EOL_SHRED["Controlled battery shredding / crushing"]
+        EOL_SHRED -->|"Battery fragments"| EOL_ELECT["Electrolyte removal / treatment - where required"]
+
+        EOL_SHRED -->|"Volatile and hazardous emissions"| EOL_GAS["Off-gas collection and treatment"]
+
+        EOL_ELECT -->|"Electrolyte-containing stream"| EOL_ES["Electrolyte recovery or treatment"]
+
+        EOL_ELECT -->|"Conditioned battery fragments"| EOL_SIEVE["Screening and particle-size classification"]
+        EOL_SIEVE --> EOL_MAG["Magnetic / ferrous-material separation"]
+
+        EOL_MAG -->|"Recovered ferrous fraction"| EOL_STEEL["Ferrous metal fraction"]
+        EOL_MAG --> EOL_AIR["Air / density / physical separation"]
+
+        EOL_AIR -->|"Copper-rich fraction"| EOL_CUSCRAP["Copper-bearing scrap"]
+        EOL_AIR -->|"Aluminium-rich fraction"| EOL_ALSCRAP["Aluminium-bearing scrap"]
+        EOL_AIR -->|"Plastic and separator fraction"| EOL_PLAST["Plastic / separator recovery or treatment"]
+
+        EOL_AIR -->|"Electrode coating-rich fraction"| EOL_BMSIEVE["Black-mass separation and concentration"]
+        EOL_BMSIEVE --> EOL_BLACK["BLACK MASS"]
+
+        EOL_BMSIEVE -->|"Residual mixed fractions"| EOL_RES["Residual separation and treatment"]
+    end
+
+    subgraph EOL_S6["EOL-6 — PYROMETALLURGICAL RECOVERY"]
+        direction TB
+
+        EOL_SELECT -->|"Suitable cells / battery feed"| EOL_PYFEED["Pyrometallurgical feed preparation"]
+        EOL_BLACK -->|"Alternative suitable pyromet feed"| EOL_PYFEED
+
+        EOL_PYFEED --> EOL_SMELT["High-temperature smelting"]
+
+        EOL_SMELT -->|"Metal-bearing molten phase"| EOL_PYSEP["Metal-slag separation"]
+        EOL_SMELT -->|"Furnace off-gas"| EOL_PYGAS["Gas cleaning and emissions treatment"]
+
+        EOL_PYSEP -->|"Ni-Co-Cu-bearing alloy"| EOL_ALLOY["Recovered mixed metal alloy"]
+        EOL_PYSEP -->|"Oxide slag phase"| EOL_SLAG["Lithium / aluminium-bearing slag"]
+
+        EOL_SLAG -.->|"Where slag recovery is applied"| EOL_SLAGREC["Additional slag processing and metal recovery"]
+        EOL_SLAGREC -->|"Recovered lithium-bearing intermediate"| EOL_LIFEED["Lithium-bearing recovery stream"]
+
+        EOL_ALLOY -->|"Alloy to chemical refining"| EOL_ALLEACH["Alloy dissolution / acid leaching"]
+        EOL_ALLEACH --> EOL_PYLIQ["Ni-Co-Cu-bearing leach liquor"]
+    end
+
+    subgraph EOL_S7["EOL-7 — HYDROMETALLURGICAL RECOVERY"]
+        direction TB
+
+        EOL_BLACK -->|"Black mass to chemical recovery"| EOL_HYDRO["Black-mass hydrometallurgical treatment"]
+
+        EOL_HYDRO --> EOL_LEACH["Acid leaching - reagent system dependent"]
+        EOL_LEACH --> EOL_FILT["Solid-liquid separation"]
+
+        EOL_FILT -->|"Metal-bearing leach solution"| EOL_IMP["Impurity removal and solution purification"]
+        EOL_FILT -->|"Graphite / insoluble fraction"| EOL_GRAPHSEP["Graphite-rich residue separation"]
+
+        EOL_PYLIQ --> EOL_IMP
+
+        EOL_IMP -->|"Impurity-rich residues"| EOL_WASTE["Residue and effluent treatment"]
+        EOL_IMP -->|"Purified metal-bearing solution"| EOL_MSEPAR["Metal separation and product-route selection"]
+
+        EOL_MSEPAR -->|"Co-bearing stream"| EOL_COREF["Cobalt purification and sulfate finishing"]
+        EOL_COREF --> EOL_COSO4["BATTERY-GRADE COBALT SULFATE"]
+
+        EOL_MSEPAR -->|"Ni-bearing stream"| EOL_NIREF["Nickel purification and sulfate finishing"]
+        EOL_NIREF --> EOL_NISO4["BATTERY-GRADE NICKEL SULFATE"]
+
+        EOL_MSEPAR -->|"Optional mixed hydroxide route"| EOL_MHPP["Mixed hydroxide precipitation and separation"]
+        EOL_MHPP --> EOL_MHP["MHP - MIXED HYDROXIDE PRECIPITATE"]
+
+        EOL_MSEPAR -->|"Li-bearing stream where recovered"| EOL_LISEP["Lithium separation and solution purification"]
+        EOL_LIFEED -.-> EOL_LISEP
+
+        EOL_LISEP --> EOL_LICARB["Lithium carbonate precipitation and finishing"]
+        EOL_LICARB --> EOL_LI2CO3["RECOVERED LITHIUM CARBONATE"]
+
+        EOL_MSEPAR -->|"Suitable mixed Ni-Mn-Co solution"| EOL_MIXNMC["Recovered Ni-Mn-Co sulfate solution"]
+
+        EOL_MSEPAR -->|"Other separated products"| EOL_OTHER["Other metal-bearing intermediates"]
+    end
+
+    subgraph EOL_S8["EOL-8 — DIRECT ACTIVE-MATERIAL REGENERATION"]
+        direction TB
+
+        EOL_BLACK -.->|"Only suitable structure-preserving feed"| EOL_DSEP["Selective cathode / anode material separation"]
+
+        EOL_DSEP -->|"Cathode active material fraction"| EOL_CATHFRAC["Recovered cathode particle fraction"]
+        EOL_DSEP -->|"Graphite-rich fraction"| EOL_GRAPHSEP
+
+        EOL_CATHFRAC --> EOL_BIND["Binder and current-collector contamination removal"]
+        EOL_BIND --> EOL_CHEMSORT["NMC / NCA chemistry-specific material sorting"]
+
+        EOL_CHEMSORT --> EOL_RELI["Lithium replenishment / relithiation"]
+        EOL_RELI --> EOL_POST["Thermal / chemical regeneration and particle finishing"]
+        EOL_POST --> EOL_CAMQC["CAM purity, structure and electrochemical qualification"]
+
+        EOL_CAMQC -->|"Qualified NMC chemistry"| EOL_NMCCAM["REGENERATED NMC CAM"]
+        EOL_CAMQC -->|"Qualified NCA chemistry"| EOL_NCACAM["REGENERATED NCA CAM"]
+        EOL_CAMQC -->|"Off-spec recovered CAM"| EOL_CAMREJ["Further treatment / recovery assessment"]
+
+        EOL_GRAPHSEP --> EOL_GCLEAN["Graphite purification and surface treatment"]
+        EOL_GCLEAN --> EOL_GQC["Graphite quality and performance qualification"]
+        EOL_GQC --> EOL_GRAPH["QUALIFIED RECYCLED ANODE GRAPHITE"]
+    end
+
+    subgraph EOL_S9["EOL-9 — RECYCLED pCAM SYNTHESIS"]
+        direction TB
+
+        EOL_MIXNMC --> EOL_STOICH["Ni-Mn-Co composition analysis and adjustment"]
+
+        EOL_ADD["Make-up Ni / Mn / Co sulfate reagents - where required"] --> EOL_STOICH
+
+        EOL_STOICH --> EOL_CP["Controlled hydroxide co-precipitation"]
+
+        EOL_CP --> EOL_AGE["Precursor particle growth and aging"]
+        EOL_AGE --> EOL_PSEP["Precursor solid-liquid separation"]
+
+        EOL_PSEP -->|"Wet precursor solids"| EOL_WASH["Washing and filtration"]
+        EOL_PSEP -->|"Mother liquor"| EOL_ML["Mother liquor and reagent recovery / treatment"]
+
+        EOL_WASH --> EOL_PDRY["Precursor drying"]
+        EOL_PDRY --> EOL_PCLASS["Particle classification and finishing"]
+        EOL_PCLASS --> EOL_PQC["Recycled precursor quality control"]
+
+        EOL_PQC --> EOL_NMCPCAM["RECYCLED NMC HYDROXIDE pCAM"]
+    end
+
+    subgraph EOL_S10["EOL-10 — MATERIAL QUALIFICATION AND REINTEGRATION"]
+        direction TB
+
+        EOL_LI2CO3 -.->|"If lithium hydroxide is required"| EOL_LICONV["Lithium chemical conversion and purification"]
+        EOL_LICONV --> EOL_LIOH["QUALIFIED LiOH.H2O"]
+
+        EOL_CUSCRAP --> EOL_CUREF["Copper scrap refining and foil manufacture"]
+        EOL_CUREF --> EOL_CUFOIL["QUALIFIED COPPER FOIL"]
+
+        EOL_ALSCRAP --> EOL_ALREF["Aluminium scrap refining and foil manufacture"]
+        EOL_ALREF --> EOL_ALFOIL["QUALIFIED ALUMINIUM FOIL"]
+    end
+
+    %% =====================================================
+    %% COLOUR DEFINITIONS
+    %% =====================================================
+
+    classDef feed fill:#e5efff,stroke:#668dcc,color:#17365d
+    classDef hub fill:#fff0d8,stroke:#c58a38,color:#654515
+    classDef product fill:#e2f2e7,stroke:#4b9365,color:#174b31
+    classDef waste fill:#f7e8e3,stroke:#b67b68,color:#713f31
+
+    class EOL_IN_NMC,EOL_IN_NCA,EOL_ADD feed
+
+    class EOL_DEC,EOL_ARCH,EOL_SELECT,EOL_MSEPAR,EOL_CHEMSORT,EOL_PQC hub
+
+    class EOL_SECOND,EOL_RETURN,EOL_BLACK,EOL_COSO4,EOL_NISO4,EOL_MHP,EOL_LI2CO3,EOL_NMCCAM,EOL_NCACAM,EOL_GRAPH,EOL_NMCPCAM,EOL_LIOH,EOL_CUFOIL,EOL_ALFOIL product
+
+    class EOL_HAZ,EOL_GAS,EOL_PYGAS,EOL_WASTE,EOL_RES,EOL_CAMREJ waste

@@ -1,0 +1,12 @@
+{
+  "name": "cobalt-ev-process-map",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/measure-original.cjs && node scripts/render-eol.cjs && python3 scripts/append-eol.py && python3 scripts/check-routes.py",
+    "check": "python3 scripts/check-routes.py && node scripts/check-viewer.cjs"
+  },
+  "devDependencies": {
+    "mermaid": "11.17.2",
+    "playwright": "1.56.1"
+  }
+}

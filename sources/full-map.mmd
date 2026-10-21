@@ -1,0 +1,1554 @@
+
+flowchart TB
+
+    %% ============================================================
+    %% INTEGRATED COBALT-TO-ELECTRIC-VEHICLE SUPPLY CHAIN
+    %% ORIGINAL 11 MAPS — NAMESPACED AND CONNECTED
+    %% ============================================================
+
+    %% ============================================================
+    %% TIERS 1–3 — SEDIMENT-HOSTED STRATIFORM Cu-Co DEPOSITS
+    %% ============================================================
+
+    subgraph SC_MAP["TIERS 1–3 — SEDIMENT-HOSTED STRATIFORM Cu-Co DEPOSITS"]
+        direction TB
+
+        subgraph SC_T1["TIER 1 — MINING AND ORE EXTRACTION"]
+            direction TB
+
+            SC_DEP["Sediment-hosted stratiform Cu-Co deposit"]
+
+            SC_DEP --> SC_OP["Open-pit mining"]
+            SC_DEP --> SC_UG["Underground mining - where applicable"]
+
+            SC_OP -->|"Excavated ore"| SC_ROM["ROM ore handling and stockpiling"]
+            SC_UG -->|"Extracted ore"| SC_ROM
+            SC_OP -->|"Overburden and waste rock"| SC_WR["Waste rock management"]
+
+            SC_ROM --> SC_CL["Ore classification and blending"]
+
+            SC_CL -->|"Oxidised Cu-Co ore"| SC_OX["Oxide / non-sulfide ore"]
+            SC_CL -->|"Primary sulfide ore"| SC_SU["Cu-Co sulfide ore"]
+            SC_CL -->|"Transitional ore"| SC_MX["Mixed oxide-sulfide ore"]
+        end
+
+        subgraph SC_T2["TIER 2 — ORE PREPARATION AND BENEFICIATION"]
+            direction TB
+
+            SC_OX --> SC_OXC["Crushing, screening and washing"]
+            SC_OXC -->|"Crushed oxide ore"| SC_OXG["Grinding and classification"]
+            SC_OXG -->|"Ground oxide ore slurry"| SC_OXS["Prepared whole-ore slurry"]
+
+            SC_OXC -->|"Selected crushed material"| SC_DMS["Dense media separation - where applicable"]
+            SC_DMS -->|"Upgraded Cu-Co fraction"| SC_OXCON["Oxide Cu-Co concentrate"]
+            SC_DMS -->|"Rejects"| SC_BT["Beneficiation residues"]
+
+            SC_OXG -->|"Conditioned oxide pulp"| SC_OF["Oxide flotation - where applicable"]
+            SC_OF -->|"Cu-Co oxide concentrate"| SC_OXCON
+            SC_OF -->|"Flotation tailings"| SC_BT
+
+            SC_OXCON --> SC_REP["Repulping"]
+            SC_REP -->|"Oxide concentrate slurry"| SC_OXCS["Prepared concentrate slurry"]
+
+            SC_SU --> SC_SC["Crushing and grinding"]
+            SC_SC -->|"Ground sulfide pulp"| SC_SF["Sulfide flotation"]
+            SC_SF -->|"Cu-Co sulfide concentrate"| SC_SCON["Cu-Co sulfide concentrate"]
+            SC_SF -->|"Flotation tailings"| SC_BT
+
+            SC_MX -.->|"Route according to mineralogy"| SC_OXC
+            SC_MX -.->|"Route according to mineralogy"| SC_SC
+        end
+
+        subgraph SC_T3["TIER 3 — METALLURGICAL EXTRACTION AND INTERMEDIATE PRODUCTION"]
+            direction TB
+
+            SC_SCON -->|"Concentrate to roasting"| SC_RO["Sulfating roasting"]
+            SC_RO -->|"Roasted Cu-Co calcine"| SC_QU["Quenching and repulping"]
+            SC_QU -->|"Calcine slurry"| SC_LEACH["Acid leaching"]
+
+            SC_OXS -->|"Whole-ore slurry"| SC_LEACH
+            SC_OXCS -->|"Concentrate slurry"| SC_LEACH
+            SC_SA["Sulfuric acid"] --> SC_LEACH
+            SC_RED["SO2 / reductant as required"] --> SC_LEACH
+
+            SC_LEACH -->|"Cu-Co leach slurry"| SC_SL["Thickening and counter-current decantation"]
+            SC_SL -->|"Washed leach residue"| SC_RT["Residue neutralisation and tailings"]
+            SC_SL -->|"Cu-Co pregnant leach solution"| SC_PLS["Clarification and solution conditioning"]
+
+            SC_PLS -->|"Clarified Cu-Co liquor"| SC_CUSX["Copper solvent extraction"]
+
+            SC_CUSX -->|"Copper-loaded organic"| SC_CUSTR["Copper stripping"]
+            SC_CUSTR -->|"Cu-rich electrolyte"| SC_CUFIL["Electrolyte filtration"]
+            SC_CUFIL -->|"Clean copper electrolyte"| SC_CUEW["Copper electrowinning"]
+            SC_CUEW -->|"Copper cathodes"| SC_CATH["COPPER CATHODE"]
+
+            SC_CUEW -.->|"Spent electrolyte"| SC_CUSTR
+            SC_CUSTR -.->|"Regenerated organic"| SC_CUSX
+
+            SC_CUSX -->|"Copper-depleted raffinate"| SC_RS["Raffinate split"]
+            SC_RS -.->|"Raffinate recycle"| SC_LEACH
+
+            SC_RS -->|"Cobalt-bearing bleed"| SC_FAM["Fe / Al / Mn precipitation"]
+            SC_FM["Limestone and oxidation reagents"] --> SC_FAM
+            SC_FAM -->|"Impurity-bearing slurry"| SC_FAMS["Thickening and filtration"]
+            SC_FAMS -->|"Fe / Al / Mn-rich residue"| SC_RT
+
+            SC_FAMS -->|"Cobalt-rich clarified liquor"| SC_CUCL["Residual copper precipitation"]
+            SC_LC["Lime"] --> SC_CUCL
+            SC_CUCL -->|"Copper-containing slurry"| SC_CUSEP["Solid-liquid separation"]
+            SC_CUSEP -->|"Copper-bearing precipitate"| SC_LEACH
+
+            SC_CUSEP -->|"Purified cobalt-bearing liquor"| SC_COP["Cobalt hydroxide precipitation"]
+            SC_MG["Magnesia"] --> SC_COP
+
+            SC_COP -->|"Cobalt hydroxide slurry"| SC_COF["Thickening, filtration and washing"]
+            SC_COF -->|"Cobalt hydroxide cake"| SC_COH["COBALT HYDROXIDE"]
+
+            SC_COF -->|"Mother liquor"| SC_SCAV["Secondary cobalt precipitation / scavenging"]
+            SC_SCAV -.->|"Recovered Co-bearing solids"| SC_FAM
+            SC_SCAV -->|"Co-depleted liquor"| SC_WW["Water treatment / CCD recycle"]
+
+            SC_SCON -->|"Concentrate to smelting"| SC_SM["Smelting and converting"]
+            SC_SM -->|"Copper-rich blister metal"| SC_BCU["Anode refining and casting"]
+            SC_BCU -->|"Copper anodes"| SC_CUER["Copper electrorefining"]
+            SC_CUER -->|"Copper cathodes"| SC_CATH
+
+            SC_SM -->|"Cobalt-bearing slag"| SC_SLAG["Cobalt-rich smelter slag"]
+            SC_SLAG -->|"Slag feed"| SC_REDUCT["Carbothermic reduction in electric furnace"]
+            SC_CAR["Carbonaceous reductant"] --> SC_REDUCT
+
+            SC_REDUCT -->|"Metal and slag phases"| SC_SEP["Metal-slag separation"]
+            SC_SEP -->|"Discard / depleted slag"| SC_SR["Slag management"]
+            SC_SEP -->|"Recovered alloy"| SC_ALLOY["Co-Cu-Fe ALLOY"]
+        end
+    end
+
+    %% ============================================================
+    %% TIERS 1–3 — Ni-Co LATERITE DEPOSITS
+    %% ============================================================
+
+    subgraph LA_MAP["TIERS 1–3 — Ni-Co LATERITE DEPOSITS"]
+        direction TB
+
+        subgraph LA_T1["TIER 1 — MINING AND ORE EXTRACTION"]
+            direction TB
+
+            LA_DEP["Ni-Co laterite deposit"]
+            LA_DEP --> LA_MIN["Selective open-pit mining"]
+            LA_MIN -->|"Excavated lateritic ore"| LA_ROM["ROM handling and stockpiling"]
+            LA_MIN -->|"Overburden and barren rock"| LA_W1["Waste rock management"]
+
+            LA_ROM --> LA_GC["Ore classification and blending"]
+
+            LA_GC -->|"Oxide-rich ore"| LA_LIM["Limonite ore"]
+            LA_GC -->|"Clay-rich transition ore"| LA_CLAY["Smectite / transition ore"]
+            LA_GC -->|"Mg-silicate-rich ore"| LA_SAP["Saprolite ore"]
+        end
+
+        subgraph LA_T2["TIER 2 — ORE PREPARATION AND BENEFICIATION"]
+            direction TB
+
+            LA_LIM --> LA_LC["Crushing and wet scrubbing"]
+            LA_CLAY --> LA_LC
+            LA_LC -->|"Disaggregated ore slurry"| LA_LS["Screening and hydraulic classification"]
+            LA_LS -->|"Coarse barren material"| LA_R1["Coarse rejects"]
+            LA_LS -->|"Ni-Co-bearing fine slurry"| LA_LT["Thickening and blending"]
+            LA_LT -->|"Conditioned limonite / clay slurry"| LA_HPF["Prepared HPAL feed"]
+
+            LA_SAP --> LA_SC["Crushing and screening"]
+            LA_SC -->|"Sized saprolite"| LA_SS["Scrubbing and classification"]
+            LA_SS -->|"Barren coarse fraction"| LA_R2["Coarse rejects"]
+            LA_SS -->|"Beneficiated saprolite slurry"| LA_ST["Thickening"]
+            LA_ST -->|"Saprolite slurry"| LA_ALF["Prepared atmospheric-leach feed"]
+
+            LA_SC -->|"Selected saprolite"| LA_DR["Drying and screening"]
+            LA_DR -->|"Dry saprolite ore"| LA_PYF["Prepared smelter feed"]
+
+            LA_LC -.->|"Suitable oxide ore"| LA_CD["Dewatering and drying"]
+            LA_CD -->|"Dry ore"| LA_CF["Prepared Caron feed"]
+
+            LA_SC -.->|"Suitable low-grade leachable ore"| LA_AG["Sizing and agglomeration"]
+            LA_AG -->|"Agglomerated ore"| LA_HLF["Prepared heap-leach feed"]
+        end
+
+        subgraph LA_T3["TIER 3 — METALLURGICAL EXTRACTION AND INTERMEDIATE PRODUCTION"]
+            direction TB
+
+            %% HPAL route
+            LA_HPF --> LA_PH["Preheating and slurry pressurisation"]
+            LA_PH -->|"Heated ore slurry"| LA_HPAL["High-pressure acid leaching"]
+            LA_H2["Sulfuric acid and steam"] --> LA_HPAL
+            LA_HPAL -->|"Ni-Co-bearing leach slurry"| LA_FL["Flash depressurisation and heat recovery"]
+
+            %% Atmospheric leach route
+            LA_ALF --> LA_PRE["Atmospheric acid pre-leaching"]
+            LA_AS["Sulfuric acid"] --> LA_PRE
+            LA_PRE -->|"Partially leached saprolite slurry"| LA_AL["Atmospheric leaching"]
+            LA_FL -.->|"HPAL discharge - combined circuit"| LA_AL
+
+            %% Neutralisation / CCD route
+            LA_FL -->|"HPAL discharge - standalone circuit"| LA_PN["Partial neutralisation"]
+            LA_AL -->|"Ni-Co-bearing leach slurry"| LA_PN
+            LA_LST["Limestone"] --> LA_PN
+            LA_PN -->|"Partially neutralised slurry"| LA_CCD["Counter-current decantation and washing"]
+            LA_CCD -->|"Washed leach residue"| LA_TAIL["Tailings neutralisation and management"]
+            LA_CCD -->|"Ni-Co-rich pregnant leach solution"| LA_IMP["Fe / Al / Cr impurity precipitation"]
+            LA_IMP -->|"Impurity-bearing slurry"| LA_IF["Thickening and filtration"]
+            LA_IF -->|"Impurity solids"| LA_TAIL
+            LA_IF -->|"Clarified Ni-Co sulfate liquor"| LA_SOL["Ni-Co sulfate solution hub"]
+
+            %% Heap leach route
+            LA_HLF --> LA_HEAP["Sulfuric acid heap leaching"]
+            LA_HEAP -->|"Ni-Co pregnant leach solution"| LA_HCL["Solution clarification"]
+            LA_HCL -->|"Clarified Ni-Co liquor"| LA_IMP
+
+            %% MHP route
+            LA_SOL -->|"Solution to hydroxide route"| LA_MHP1["Mixed hydroxide precipitation"]
+            LA_MGO["MgO / NaOH"] --> LA_MHP1
+            LA_MHP1 -->|"Ni-Co hydroxide slurry"| LA_MHP2["Thickening, filtration and washing"]
+            LA_MHP2 -->|"Mixed hydroxide filter cake"| LA_MHPO["MHP - MIXED HYDROXIDE PRECIPITATE"]
+            LA_MHP2 -->|"Ni-Co-bearing mother liquor"| LA_SCAV["Scavenger precipitation"]
+            LA_SCAV -->|"Recovered Ni-Co solids"| LA_IMP
+            LA_SCAV -->|"Depleted liquor"| LA_WW["Effluent treatment / water recycle"]
+
+            %% MSP route
+            LA_SOL -->|"Solution to sulfide route"| LA_MSP1["Mixed sulfide precipitation"]
+            LA_HS["Hydrogen sulfide"] --> LA_MSP1
+            LA_MSP1 -->|"Ni-Co sulfide slurry"| LA_MSP2["Thickening, filtration and washing"]
+            LA_MSP2 -->|"Mixed sulfide filter cake"| LA_MSPO["MSP - MIXED SULFIDE PRECIPITATE"]
+            LA_MSP2 -->|"Depleted liquor"| LA_WW
+
+            %% Direct eluate route
+            LA_FL -.->|"Leached slurry to resin circuit"| LA_RIP["Resin-in-pulp adsorption"]
+            LA_RIP -->|"Loaded Ni-Co resin"| LA_EL["Acid elution"]
+            LA_EL -->|"Ni-Co-rich sulfate eluate"| LA_ELU["Ni-Co-RICH SULFATE ELUATE"]
+            LA_RIP -->|"Barren slurry"| LA_TAIL
+
+            %% Purified solution route
+            LA_SOL -->|"Solution to direct recovery"| LA_SX["Impurity removal by SX / IX"]
+            LA_SX -->|"Separated impurity stream"| LA_IW["Impurity treatment"]
+            LA_SX -->|"Purified Ni-Co-bearing solution"| LA_PURE["PURIFIED Ni-Co-BEARING SOLUTION"]
+
+            %% Goro-type route
+            LA_SOL -.->|"Goro-type recovery option"| LA_GSX["Primary Ni-Co solvent extraction"]
+            LA_GSX -->|"Recovered Ni-Co stream"| LA_ZN["Zinc removal"]
+            LA_ZN -->|"Purified Ni-Co stream"| LA_SEP["Ni-Co separation by solvent extraction"]
+            LA_SEP -->|"Co-rich solution"| LA_COCP["Cobalt carbonate precipitation"]
+            LA_NC["Sodium carbonate"] --> LA_COCP
+            LA_COCP -->|"Cobalt carbonate filter cake"| LA_CCO["COBALT CARBONATE"]
+            LA_SEP -->|"Ni-rich solution"| LA_NIOP["Nickel pyrohydrolysis"]
+            LA_NIOP -->|"Nickel oxide granules"| LA_NIO["NICKEL OXIDE"]
+
+            %% Pyromet route
+            LA_PYF --> LA_RKEF["Rotary kiln drying and reduction"]
+            LA_RD["Reducing agent"] --> LA_RKEF
+            LA_RKEF -->|"Reduced hot calcine"| LA_EF["Electric furnace smelting"]
+            LA_EF -->|"Ferronickel metal"| LA_FENI["FERRONICKEL / NPI"]
+            LA_EF -->|"Smelting slag"| LA_SLG["Slag management"]
+
+            %% Caron route
+            LA_CF --> LA_CR["Reduction roasting"]
+            LA_CR -->|"Reduced roasted ore"| LA_AM["Ammonia-ammonium carbonate leaching"]
+            LA_AM -->|"Ammoniacal leach slurry"| LA_ASL["Solid-liquid separation"]
+            LA_ASL -->|"Leach residue"| LA_TAIL
+            LA_ASL -->|"Ni-Co-bearing ammoniacal liquor"| LA_CAR["Ammonia stripping and metal recovery"]
+            LA_CAR -->|"Nickel product"| LA_CNI["NICKEL OXIDE / CARBONATE"]
+            LA_CAR -.->|"Cobalt by-product - process dependent"| LA_CCO2["Cobalt-bearing intermediate"]
+        end
+    end
+
+    %% ============================================================
+    %% TIERS 1–3 — MAGMATIC Ni-Cu-Co SULFIDE DEPOSITS
+    %% ============================================================
+
+    subgraph MG_MAP["TIERS 1–3 — MAGMATIC Ni-Cu-Co SULFIDE DEPOSITS"]
+        direction TB
+
+        subgraph MG_T1["TIER 1 — MINING AND ORE EXTRACTION"]
+            direction TB
+
+            MG_DEP["Magmatic Ni-Cu-Co sulfide deposit"]
+
+            MG_DEP --> MG_OP["Open-pit mining"]
+            MG_DEP --> MG_UG["Underground mining"]
+
+            MG_OP -->|"Excavated sulfide ore"| MG_ROM["ROM ore handling and stockpiling"]
+            MG_UG -->|"Extracted sulfide ore"| MG_ROM
+
+            MG_OP -->|"Overburden / waste rock"| MG_WR["Waste rock management"]
+            MG_UG -->|"Development waste rock"| MG_WR
+
+            MG_ROM --> MG_GC["Ore classification and blending"]
+
+            MG_GC -->|"High sulfide content"| MG_MASS["Massive sulfide ore"]
+            MG_GC -->|"Intermediate sulfide content"| MG_SEMI["Semi-massive / net-textured sulfide ore"]
+            MG_GC -->|"Disseminated sulfides"| MG_DISS["Disseminated sulfide ore"]
+        end
+
+        subgraph MG_T2["TIER 2 — ORE PREPARATION AND BENEFICIATION"]
+            direction TB
+
+            MG_MASS --> MG_CR["Primary and secondary crushing"]
+            MG_SEMI --> MG_CR
+            MG_DISS --> MG_CR
+
+            MG_CR -->|"Crushed sulfide ore"| MG_GR["Wet grinding and classification"]
+            MG_W["Process water"] --> MG_GR
+
+            MG_GR -->|"Ground sulfide pulp"| MG_COND["Flotation conditioning"]
+            MG_REAG["Collectors, frothers and modifiers"] --> MG_COND
+
+            MG_COND -->|"Conditioned sulfide pulp"| MG_ROUGH["Bulk Ni-Cu-Co rougher flotation"]
+
+            MG_ROUGH -->|"Ni-Cu-Co rougher concentrate"| MG_RG["Concentrate regrinding"]
+            MG_RG -->|"Reground sulfide concentrate"| MG_CLEAN["Cleaner and re-cleaner flotation"]
+
+            MG_CLEAN -->|"Upgraded sulfide concentrate"| MG_BULK["Cleaned bulk Ni-Cu-Co concentrate"]
+            MG_CLEAN -->|"Cleaner-scavenger recycle"| MG_RG
+
+            MG_ROUGH -->|"Sulfide-poor flotation tailings"| MG_PYR["Pyrrhotite flotation - where applied"]
+            MG_PYR -->|"Pyrrhotite-rich tailings"| MG_PT["Pyrrhotite tailings management"]
+            MG_PYR -->|"Non-pyrrhotite tailings"| MG_NT["Tailings management / paste backfill"]
+
+            MG_BULK -->|"Combined concentrate route"| MG_BDEW["Concentrate thickening and filtration"]
+            MG_BDEW -->|"Dewatered concentrate"| MG_BCON["Ni-Cu-Co sulfide concentrate"]
+
+            MG_BULK -->|"Selective flotation route"| MG_SEPF["Nickel-copper separation flotation"]
+
+            MG_SEPF -->|"Nickel-rich concentrate slurry"| MG_NF["Nickel concentrate thickening and filtration"]
+            MG_NF -->|"Dewatered nickel-rich concentrate"| MG_NCON["Nickel-rich sulfide concentrate"]
+
+            MG_SEPF -->|"Copper-rich concentrate slurry"| MG_CF["Copper concentrate thickening and filtration"]
+            MG_CF -->|"Dewatered copper concentrate"| MG_CCON["Copper-rich sulfide concentrate"]
+        end
+
+        subgraph MG_T3["TIER 3 — METALLURGICAL EXTRACTION AND INTERMEDIATE PRODUCTION"]
+            direction TB
+
+            MG_BCON -->|"Concentrate to smelting"| MG_DRY["Concentrate drying"]
+            MG_NCON -->|"Nickel concentrate to smelting"| MG_DRY
+
+            MG_DRY -->|"Dry sulfide concentrate"| MG_SM["Nickel sulfide smelting"]
+            MG_SM -->|"Molten Ni-Cu-Co-Fe matte"| MG_MAT["Furnace matte"]
+
+            MG_SM -->|"Iron-silicate slag"| MG_SLAG["Slag management"]
+            MG_SM -->|"SO2-bearing off-gas"| MG_GAS["Off-gas treatment"]
+
+            MG_MAT -->|"Molten furnace matte"| MG_CONV["Matte converting"]
+            MG_AIR["Air / oxygen and silica flux"] --> MG_CONV
+
+            MG_CONV -->|"Iron-rich converter slag"| MG_SLAG
+            MG_CONV -->|"SO2-bearing off-gas"| MG_GAS
+            MG_CONV -->|"Low-iron Ni-Cu-Co matte"| MG_CM["Ni-Cu-Co CONVERTER MATTE"]
+
+            MG_CCON -->|"Copper concentrate"| MG_CSM["Copper concentrate smelting"]
+            MG_CSM -->|"Copper-rich furnace matte"| MG_CCV["Copper converting"]
+            MG_CCV -->|"Blister copper"| MG_CAST["Anode refining and casting"]
+            MG_CAST -->|"Copper anodes"| MG_CER["Copper electrorefining"]
+            MG_CER -->|"Copper cathodes"| MG_CATH["COPPER CATHODE"]
+            MG_CSM -->|"Smelter slag"| MG_SLAG
+
+            MG_BCON -->|"Direct hydrometallurgical route"| MG_FGR["Fine concentrate regrinding"]
+            MG_NCON -->|"Nickel-rich concentrate"| MG_FGR
+
+            MG_FGR -->|"Finely ground sulfide concentrate"| MG_ATM["Atmospheric oxidative leaching"]
+            MG_AC["Sulfuric acid and oxidants"] --> MG_ATM
+
+            MG_ATM -->|"Partially leached sulfide slurry"| MG_PAL["Pressure oxidative leaching"]
+            MG_OX["Oxygen"] --> MG_PAL
+
+            MG_PAL -->|"Ni-Cu-Co-bearing leach slurry"| MG_SEP["Thickening, CCD washing and filtration"]
+            MG_SEP -->|"Undissolved solids"| MG_RES["Leach residue management"]
+            MG_SEP -->|"Ni-Cu-Co pregnant leach solution"| MG_FE["Primary iron precipitation"]
+            MG_FE -->|"Iron-rich precipitates"| MG_RES
+
+            MG_FE -->|"Clarified metal-bearing liquor"| MG_CUSX["Copper solvent extraction"]
+            MG_CUSX -->|"Copper-loaded organic"| MG_STRIP["Copper stripping"]
+            MG_STRIP -->|"Copper-rich electrolyte"| MG_CUEW["Copper electrowinning"]
+            MG_CUEW -->|"Copper cathodes"| MG_CATH
+
+            MG_CUEW -.->|"Spent electrolyte"| MG_STRIP
+            MG_STRIP -.->|"Regenerated organic"| MG_CUSX
+
+            MG_CUSX -->|"Copper-depleted Ni-Co raffinate"| MG_FE2["Secondary iron removal"]
+            MG_FE2 -->|"Iron-bearing residue"| MG_RES
+            MG_FE2 -->|"Ni-Co-rich sulfate liquor"| MG_LIQ["Ni-Co-RICH SULFATE LIQUOR"]
+
+            MG_LIQ -->|"Further purification"| MG_CD["Cadmium removal - where required"]
+            MG_CD -->|"Cadmium-bearing residue"| MG_RES
+
+            MG_CD -->|"Partially purified Ni-Co solution"| MG_ISX["Impurity solvent extraction"]
+            MG_ISX -->|"Extracted impurities"| MG_IW["Impurity treatment"]
+            MG_ISX -->|"Purified Ni-Co-bearing solution"| MG_PURE["PURIFIED Ni-Co-BEARING SOLUTION"]
+        end
+    end
+
+    %% ============================================================
+    %% TIER 4 — COBALT SULFATE REFINING
+    %% ============================================================
+
+    subgraph R4_MAP["TIER 4 — COBALT SULFATE REFINING"]
+        direction TB
+
+        subgraph R4_S1["1 — FEEDSTOCK-SPECIFIC PREPARATION AND PRIMARY TREATMENT"]
+            direction TB
+
+            %% Cobalt hydroxide route
+            R4_A1["1. Cobalt hydroxide"] --> R4_A2["Repulping"]
+            R4_AW["Recycled water"] --> R4_A2
+            R4_A2 --> R4_A3["Sulfuric acid leaching"]
+            R4_AH["Sulfuric acid"] --> R4_A3
+            R4_A3 --> R4_A4["Pre-neutralisation"]
+            R4_A4 --> R4_A5["Thickening and filtration"]
+            R4_A5 -->|"Solid residues"| R4_AR["Residue treatment"]
+            R4_A5 -->|"Cobalt-bearing liquor"| R4_A6["Secondary neutralisation"]
+            R4_A6 --> R4_A7["Thickening and filtration"]
+            R4_A7 -->|"Precipitated solids"| R4_AR
+            R4_A7 -->|"Clarified cobalt solution"| R4_A8["Impurity solvent extraction"]
+            R4_A8 -->|"Impurity-rich stream"| R4_AT["Effluent treatment"]
+            R4_A8 -->|"Cobalt-rich raffinate"| R4_A9["Cobalt solvent extraction"]
+            R4_A9 -->|"Cobalt-depleted raffinate"| R4_AT
+            R4_A9 -->|"Loaded cobalt organic"| R4_A10["Acid stripping"]
+
+            %% Co-Cu-Fe alloy route
+            R4_B1["2. Co-Cu-Fe alloy"] --> R4_B2["Atomisation"]
+            R4_B2 --> R4_B3["Dewatering"]
+            R4_B3 --> R4_B4["Repulping"]
+            R4_BW["Water"] --> R4_B4
+            R4_B4 --> R4_B5["Oxidative pressure leaching"]
+            R4_BA["Sulfuric acid + copper sulfate"] --> R4_B5
+            R4_BO["Oxygen"] --> R4_B5
+            R4_B5 --> R4_B6["Flash depressurisation and cooling"]
+            R4_B6 --> R4_B7["Thickening and residue filtration"]
+            R4_B7 -->|"Iron-rich residue"| R4_BR["Iron-rich residue"]
+            R4_B7 -->|"Recovered wash liquor"| R4_BRL["Leach liquor recycle"]
+            R4_BRL --> R4_B5
+            R4_B7 -->|"Co-Cu sulfate liquor"| R4_B8["Liquor polishing filtration"]
+            R4_B8 --> R4_B9["Copper solvent extraction"]
+            R4_B9 -->|"Copper-loaded organic"| R4_B10["Copper stripping"]
+            R4_B10 --> R4_B11["Copper electrowinning"]
+            R4_B11 -->|"Copper cathodes"| R4_BC["Copper metal"]
+            R4_B9 -->|"Copper-depleted raffinate"| R4_B12["Fe / Al and residual Cu removal"]
+            R4_B12 -->|"Impurity-bearing residues"| R4_BR
+            R4_B12 -->|"Cobalt-bearing liquor"| R4_B13["Cobalt hydroxide precipitation"]
+        end
+
+        subgraph R4_S2["2 — Ni-Co-BEARING FEEDSTOCK DISSOLUTION / LEACHING"]
+            direction TB
+
+            R4_C1["3. Mixed hydroxide precipitate - MHP"] --> R4_C2["Sulfuric acid leaching"]
+            R4_C2 --> R4_C3["Solid-liquid separation"]
+            R4_C3 -->|"Leach residue"| R4_CR["Residue treatment"]
+
+            R4_D1["4. Mixed sulfide precipitate - MSP"] --> R4_D2["Oxidative pressure leaching"]
+            R4_D2 --> R4_D3["Solid-liquid separation"]
+            R4_D3 -->|"Undissolved residue"| R4_DR["Residue treatment"]
+
+            R4_E1["5. Ni-Co-rich sulfate liquor / eluate"]
+
+            R4_F1["6. Ni-Cu-Co converter matte"] --> R4_F2["Crushing and staged leaching"]
+            R4_F2 --> R4_F3["Solid-liquid separation"]
+            R4_F3 -->|"Cu / PGM-bearing solids"| R4_FR["Residue or separate metals recovery"]
+
+            R4_G1["7. Purified Ni-Co-bearing solutions"] --> R4_G2["Sulfate conditioning if required"]
+        end
+
+        subgraph R4_S3["3 — SHARED Ni-Co SOLUTION REFINING"]
+            direction TB
+
+            R4_MIX["Mixed Ni-Co sulfate liquor"] --> R4_C4["Oxidative neutralisation / impurity precipitation"]
+            R4_C4 --> R4_C5["Thickening and filtration"]
+            R4_C5 -->|"Fe / Al-rich solids"| R4_CW["Residue treatment"]
+            R4_C5 -->|"Clarified Ni-Co solution"| R4_C6["Impurity solvent extraction"]
+            R4_C6 -->|"Impurity-rich stream"| R4_C7["Impurity treatment"]
+            R4_C6 -->|"Purified mixed sulfate solution"| R4_C8["Nickel-cobalt solvent extraction"]
+
+            R4_C8 -->|"Cobalt-loaded organic"| R4_C9["Scrubbing and acid stripping"]
+            R4_C9 -->|"Cobalt-rich sulfate solution"| R4_CO["Cobalt sulfate solution"]
+
+            R4_C8 -->|"Nickel-rich raffinate"| R4_N1["Nickel sulfate purification"]
+            R4_N1 --> R4_N2["Nickel sulfate crystallisation"]
+            R4_N2 -->|"Nickel sulfate crystals"| R4_NP["Nickel sulfate product"]
+        end
+
+        subgraph R4_S4["4 — COBALT CHEMICAL FINISHING"]
+            direction TB
+
+            R4_CO --> R4_P1["Final solution polishing"]
+            R4_P1 --> R4_P2["Cobalt sulfate crystallisation"]
+            R4_P2 --> R4_P3["Dewatering / centrifugation"]
+            R4_P3 --> R4_P4["Drying"]
+            R4_P4 --> R4_P5["Battery-grade cobalt sulfate"]
+
+            R4_P1 -.->|"Alternative metal route"| R4_M1["Electrolyte conditioning"]
+            R4_M1 --> R4_M2["Cobalt electrowinning"]
+            R4_M2 -->|"Cobalt cathodes"| R4_M3["Cobalt metal"]
+        end
+
+        %% Original Tier 4 cross-section connections
+        R4_A10 -->|"Cobalt-rich strip liquor"| R4_CO
+        R4_B13 -->|"Cobalt hydroxide intermediate"| R4_A2
+
+        R4_C3 -->|"Ni-Co leach liquor"| R4_MIX
+        R4_D3 -->|"Ni-Co leach liquor"| R4_MIX
+        R4_E1 -->|"Ni-Co-bearing liquor"| R4_MIX
+        R4_F3 -->|"Ni-Co-bearing liquor"| R4_MIX
+        R4_G2 -->|"Purified Ni-Co sulfate solution"| R4_C8
+    end
+
+    %% ============================================================
+    %% TIER 5 — NMC pCAM MANUFACTURING
+    %% ============================================================
+
+    subgraph N5_MAP["TIER 5 — NMC PRECURSOR CATHODE ACTIVE MATERIAL"]
+        direction TB
+
+        subgraph N5_PREP["1 — METAL SULFATE AND REAGENT PREPARATION"]
+            direction TB
+
+            N5_CO["Cobalt sulfate crystals - Tier 4"]
+            N5_NI["Nickel sulfate"]
+            N5_MN["Manganese sulfate"]
+            N5_DW["Deionised water"]
+
+            N5_CO --> N5_DIS["Metal sulfate dissolution"]
+            N5_NI --> N5_DIS
+            N5_MN --> N5_DIS
+            N5_DW --> N5_DIS
+
+            N5_DIS -->|"Dissolved Ni-Mn-Co sulfates"| N5_BL["Metal sulfate blending and composition adjustment"]
+
+            N5_NH["Ammonia"] --> N5_NHP["Ammonia solution preparation"]
+            N5_PW["Process water"] --> N5_NHP
+
+            N5_NA["Sodium hydroxide"] --> N5_NAP["Caustic solution preparation"]
+            N5_PW --> N5_NAP
+        end
+
+        subgraph N5_SYN["2 — NMC HYDROXIDE PRECURSOR SYNTHESIS"]
+            direction TB
+
+            N5_CP["Controlled co-precipitation"]
+            N5_CP -->|"Ni-Mn-Co hydroxide slurry"| N5_AGE["Aging / particle growth - where separate"]
+            N5_AGE -->|"Matured precursor slurry"| N5_SEP["Centrifugation / solid-liquid separation"]
+        end
+
+        subgraph N5_FIN["3 — PRECURSOR WASHING AND FINISHING"]
+            direction TB
+
+            N5_WASH["Washing and filtration"]
+            N5_W3["Deionised wash water"] --> N5_WASH
+
+            N5_WASH -->|"Washed precursor cake"| N5_DRY["Drying"]
+            N5_DRY -->|"Dried precursor powder"| N5_SIEVE["Sieving / particle classification"]
+            N5_SIEVE -->|"On-spec precursor powder"| N5_PACK["Packaging"]
+            N5_PACK -->|"Packaged hydroxide precursor"| N5_PROD["NMC HYDROXIDE PRECURSOR - pCAM"]
+
+            N5_DRY -->|"Water vapour"| N5_VAP["Moisture exhaust"]
+            N5_SIEVE -->|"Off-spec particles"| N5_OFF["Separate rework / evaluation"]
+        end
+
+        subgraph N5_SIDE["4 — MOTHER LIQUOR TREATMENT AND REAGENT RECOVERY"]
+            direction TB
+
+            N5_ML["Mother liquor collection"]
+            N5_ML -->|"Ammonia and Na2SO4-bearing liquor"| N5_AMR["Ammonia recovery"]
+
+            N5_AMR -->|"De-ammoniated liquor"| N5_TM["Residual metal precipitation / removal"]
+            N5_CAU["NaOH for impurity removal"] --> N5_TM
+
+            N5_TM -->|"Metal-bearing solids"| N5_RES["Residue treatment"]
+            N5_TM -->|"Na2SO4-rich liquor"| N5_SALT["Sodium sulfate recovery / crystallisation"]
+
+            N5_SALT -->|"Na2SO4 by-product"| N5_BY["Sodium sulfate"]
+            N5_SALT -->|"Remaining aqueous stream"| N5_EFF["Effluent / water treatment"]
+        end
+
+        N5_BL -->|"Ni-Mn-Co sulfate solution"| N5_CP
+        N5_NHP -->|"Ammonia complexing agent"| N5_CP
+        N5_NAP -->|"NaOH precipitant"| N5_CP
+
+        N5_SEP -->|"Wet precursor solids"| N5_WASH
+        N5_SEP -->|"Mother liquor"| N5_ML
+        N5_WASH -->|"Wash liquor"| N5_ML
+
+        N5_AMR -.->|"Recovered ammonia"| N5_NHP
+    end
+
+    %% ============================================================
+    %% TIER 5 — NCA pCAM MANUFACTURING
+    %% ============================================================
+
+    subgraph A5_MAP["TIER 5 — NCA PRECURSOR CATHODE ACTIVE MATERIAL"]
+        direction TB
+
+        subgraph A5_FEED["METAL SULFATE AND REAGENT PREPARATION"]
+
+            A5_CO["Cobalt sulfate crystals - Tier 4"]
+            A5_NI["Nickel sulfate"]
+            A5_AL["Aluminium sulfate"]
+            A5_DW["Deionised water"]
+
+            A5_CO --> A5_DIS["Metal sulfate dissolution"]
+            A5_NI --> A5_DIS
+            A5_AL --> A5_DIS
+            A5_DW --> A5_DIS
+
+            A5_DIS -->|"Dissolved Ni-Co-Al sulfates"| A5_BL["Metal sulfate blending and composition adjustment"]
+
+            A5_NA["Sodium hydroxide"] --> A5_NAP["Caustic solution preparation"]
+            A5_PW["Process water"] --> A5_NAP
+
+            A5_NH["Ammonium hydroxide"] --> A5_NHP["Ammonia solution preparation"]
+            A5_PW --> A5_NHP
+
+            A5_CAR["Ammonium carbonate"] --> A5_CAP["Carbonate solution preparation"]
+            A5_PW --> A5_CAP
+        end
+
+        subgraph A5_HYD["HYDROXIDE PRECURSOR ROUTE"]
+
+            A5_HCP["Controlled hydroxide co-precipitation"]
+            A5_HCP -->|"Ni-Co-Al hydroxide slurry"| A5_HG["Particle growth / ripening in reactor"]
+            A5_HG -->|"Hydroxide precursor slurry"| A5_HS["Solid-liquid separation"]
+
+            A5_HS -->|"Wet hydroxide solids"| A5_HW["Washing and filtration"]
+            A5_WH["Deionised wash water"] --> A5_HW
+
+            A5_HW -->|"Washed hydroxide cake"| A5_HD["Drying"]
+            A5_HD -->|"Dried hydroxide precursor"| A5_HC["Sieving / classification - if required"]
+            A5_HC -->|"On-spec hydroxide precursor"| A5_HP["Packaging"]
+            A5_HP --> A5_HPROD["NCA HYDROXIDE pCAM"]
+
+            A5_HS -->|"Mother liquor"| A5_HML["Hydroxide route liquor collection"]
+            A5_HW -->|"Wash liquor"| A5_HML
+            A5_HD -->|"Water vapour"| A5_HV["Moisture exhaust"]
+            A5_HC -.->|"Off-spec particles"| A5_HR["Rework assessment"]
+        end
+
+        subgraph A5_CARB["CARBONATE-HYDROXIDE PRECURSOR ROUTE"]
+
+            A5_CCP["Controlled carbonate co-precipitation"]
+            A5_CCP -->|"Ni-Co-Al carbonate-hydroxide slurry"| A5_CG["Particle growth / ripening in reactor"]
+            A5_CG -->|"Carbonate-hydroxide slurry"| A5_CS["Solid-liquid separation"]
+
+            A5_CS -->|"Wet precursor solids"| A5_CW["Washing and filtration"]
+            A5_WC["Deionised wash water"] --> A5_CW
+
+            A5_CW -->|"Washed precursor cake"| A5_CD["Drying"]
+            A5_CD -->|"Dried carbonate-hydroxide precursor"| A5_CC["Sieving / classification - if required"]
+            A5_CC -->|"On-spec carbonate-hydroxide precursor"| A5_CP["Packaging"]
+            A5_CP --> A5_CPROD["NCA CARBONATE-HYDROXIDE pCAM"]
+
+            A5_CS -->|"Mother liquor"| A5_CML["Carbonate route liquor collection"]
+            A5_CW -->|"Wash liquor"| A5_CML
+            A5_CD -->|"Water vapour"| A5_CV["Moisture exhaust"]
+            A5_CC -.->|"Off-spec particles"| A5_CR["Rework assessment"]
+        end
+
+        subgraph A5_SIDE["LIQUID SIDE STREAMS AND POTENTIAL RECOVERY"]
+
+            A5_LT["Route-specific liquor treatment"]
+            A5_LT -.->|"Potential recovery"| A5_AMR["Ammoniacal species recovery"]
+            A5_AMR -.->|"Recovered ammonia after conditioning"| A5_NHP
+
+            A5_LT -.->|"If required"| A5_MR["Residual metal precipitation / removal"]
+            A5_MR -->|"Metal-bearing solids"| A5_RT["Residue treatment"]
+            A5_MR -.->|"Salt-rich liquor"| A5_SR["Sulfate salt recovery / crystallisation - optional"]
+            A5_SR -->|"Recovered salts"| A5_BP["Salt by-product"]
+            A5_SR -->|"Remaining aqueous stream"| A5_EFF["Effluent / water treatment"]
+            A5_LT -->|"Direct treatment alternative"| A5_EFF
+        end
+
+        A5_BL -->|"Ni-Co-Al solution - hydroxide option"| A5_HCP
+        A5_BL -->|"Ni-Co-Al solution - carbonate option"| A5_CCP
+
+        A5_NAP -->|"NaOH precipitant"| A5_HCP
+        A5_NAP -->|"NaOH pH regulator"| A5_CCP
+        A5_NHP -->|"NH4OH complexing agent"| A5_HCP
+        A5_CAP -->|"(NH4)2CO3 solution"| A5_CCP
+
+        A5_HML -->|"Hydroxide-route filtrate"| A5_LT
+        A5_CML -->|"Carbonate-route filtrate"| A5_LT
+    end
+
+    %% ============================================================
+    %% TIER 6 — NMC CAM MANUFACTURING
+    %% ============================================================
+
+    subgraph N6_MAP["TIER 6 — NMC CATHODE ACTIVE MATERIAL"]
+        direction TB
+
+        subgraph N6_S1["1 — PRECURSOR AND LITHIUM SOURCE PREPARATION"]
+            direction TB
+
+            N6_PC["NMC hydroxide precursor - Tier 5"]
+            N6_PC -->|"Dry NMC pCAM"| N6_PS["Precursor unpacking and particle sizing"]
+
+            N6_LI["Lithium hydroxide monohydrate - LiOH.H2O"]
+            N6_LI --> N6_LD["Lithium hydroxide pre-drying"]
+            N6_LD -->|"Conditioned lithium source"| N6_LS["Lithium particle sizing / ball milling"]
+            N6_LD -->|"Removed moisture"| N6_LV["Moisture exhaust"]
+
+            N6_N2["Nitrogen - handling atmosphere"] -.-> N6_PS
+            N6_N2 -.-> N6_LS
+        end
+
+        subgraph N6_S2["2 — LITHIATION AND PRIMARY CALCINATION"]
+            direction TB
+
+            N6_MX["Dry mixing and homogenisation"]
+
+            N6_MX -->|"NMC pCAM + lithium source mixture"| N6_C1["Primary lithiation and calcination"]
+
+            N6_O2["Oxygen atmosphere"] --> N6_C1
+
+            N6_C1 -->|"Calcined lithiated NMC oxide"| N6_COOL["Controlled cooling"]
+
+            N6_C1 -->|"Water vapour and process off-gas"| N6_GAS["Furnace off-gas handling"]
+        end
+
+        subgraph N6_S3["3 — POST-CALCINATION PARTICLE PROCESSING"]
+            direction TB
+
+            N6_COOL -->|"Calcined NMC agglomerates"| N6_DEG["Deagglomeration and milling"]
+            N6_DEG -->|"Milled NMC powder"| N6_SZ["Particle sizing / classification"]
+
+            N6_SZ -->|"Oversize or off-spec fraction"| N6_OFF["Separate rework assessment"]
+            N6_SZ -->|"Sized NMC CAM powder"| N6_SEL["Product finishing route selection"]
+        end
+
+        subgraph N6_S4["4 — SURFACE TREATMENT AND FINISHING"]
+            direction TB
+
+            N6_SEL -->|"Uncoated NMC pathway"| N6_QC["Final product quality control"]
+
+            N6_SEL -->|"Coated NMC pathway"| N6_WCO["Aqueous washing and coating"]
+
+            N6_CW["Deionised water"] --> N6_WCO
+            N6_MAT["Surface-coating material"] --> N6_WCO
+
+            N6_WCO -->|"NMC coating slurry"| N6_FIL["Filtration / solid-liquid separation"]
+
+            N6_FIL -->|"Wet coated NMC solids"| N6_DRY["Drying"]
+            N6_FIL -->|"Coating and wash filtrate"| N6_EFF["Effluent treatment"]
+
+            N6_DRY -->|"Dry coated NMC powder"| N6_C2["Secondary calcination / coating annealing"]
+            N6_DRY -->|"Water vapour"| N6_VAP["Moisture exhaust"]
+
+            N6_C2 -->|"Thermally treated coated NMC"| N6_FC["Controlled cooling"]
+            N6_C2 -->|"Thermal off-gas"| N6_GAS
+
+            N6_FC -->|"Coated NMC powder"| N6_QC
+        end
+
+        subgraph N6_S5["5 — FINAL PRODUCT"]
+            direction TB
+
+            N6_QC -->|"On-spec NMC CAM powder"| N6_PACK["Packaging under protective atmosphere"]
+            N6_QC -->|"Off-spec CAM powder"| N6_OFF
+
+            N6_PACK -->|"Finished NMC cathode powder"| N6_PROD["NMC CATHODE ACTIVE MATERIAL - CAM"]
+        end
+
+        N6_PS -->|"Sized NMC hydroxide precursor"| N6_MX
+        N6_LS -->|"Prepared lithium source"| N6_MX
+    end
+
+    %% ============================================================
+    %% TIER 6 — NCA CAM MANUFACTURING
+    %% ============================================================
+
+    subgraph A6_MAP["TIER 6 — NCA CATHODE ACTIVE MATERIAL"]
+        direction TB
+
+        subgraph A6_S1["1 — NCA PRECURSOR AND LITHIUM SOURCE PREPARATION"]
+            direction TB
+
+            A6_HP["NCA hydroxide precursor - Tier 5"]
+            A6_CP["NCA carbonate-hydroxide precursor - Tier 5"]
+
+            A6_LI["Lithium hydroxide monohydrate - LiOH.H2O"]
+            A6_LI --> A6_LP["Lithium source preparation and weighing"]
+
+            A6_HP -->|"Ni-Co-Al hydroxide precursor"| A6_HM["Hydroxide precursor-lithium mixing"]
+            A6_CP -->|"Ni-Co-Al carbonate-hydroxide precursor"| A6_CM["Carbonate precursor-lithium mixing"]
+
+            A6_LP -->|"Measured lithium hydroxide"| A6_HM
+            A6_LP -->|"Measured lithium hydroxide"| A6_CM
+        end
+
+        subgraph A6_S2["2 — HYDROXIDE PRECURSOR LITHIATION"]
+            direction TB
+
+            A6_HM -->|"Homogenised hydroxide-lithium mixture"| A6_HC1["First-stage heat treatment"]
+
+            A6_HC1 -->|"Partially reacted lithiated material"| A6_HC2["Second-stage calcination / sintering"]
+
+            A6_HC2 -->|"Lithiated NCA oxide"| A6_HCO["Controlled cooling"]
+
+            A6_HC1 -->|"Water-containing off-gas"| A6_HG["Thermal off-gas handling"]
+        end
+
+        subgraph A6_S3["3 — CARBONATE-HYDROXIDE PRECURSOR LITHIATION"]
+            direction TB
+
+            A6_CM -->|"Homogenised carbonate-lithium mixture"| A6_CC1["First-stage heat treatment"]
+
+            A6_CC1 -->|"Partially reacted lithiated material"| A6_CC2["Second-stage calcination / sintering"]
+
+            A6_CC2 -->|"Lithiated NCA oxide"| A6_CCO["Controlled cooling"]
+
+            A6_CC1 -->|"CO2 and water-containing off-gas"| A6_CG["Thermal off-gas handling"]
+        end
+
+        subgraph A6_S4["4 — NCA PARTICLE FINISHING"]
+            direction TB
+
+            A6_NCA["Calcined NCA CAM powder - common material category"]
+
+            A6_NCA -->|"Calcined NCA particles"| A6_DEG["Deagglomeration - as required"]
+            A6_DEG -->|"Separated NCA particles"| A6_SZ["Sieving / particle classification"]
+
+            A6_SZ -->|"Off-spec particles"| A6_OFF["Separate rework assessment"]
+
+            A6_SZ -->|"On-spec NCA powder"| A6_SEL["Surface treatment selection"]
+        end
+
+        subgraph A6_S5["5 — OPTIONAL NCA SURFACE MODIFICATION"]
+            direction TB
+
+            A6_SEL -->|"Uncoated route"| A6_UQC["Uncoated NCA product finishing"]
+
+            A6_SEL -->|"Boron-containing coating route"| A6_BC["Dry blending / ball milling"]
+
+            A6_BOR["Boric acid - coating precursor"] --> A6_BG["Boric acid grinding"]
+            A6_BG -->|"Ground boric acid"| A6_BC
+
+            A6_BC -->|"NCA and coating precursor mixture"| A6_CA["Coating heat treatment"]
+
+            A6_CA -->|"Surface-modified NCA"| A6_CCL["Controlled cooling"]
+
+            A6_CCL -->|"Coated NCA powder"| A6_CQC["Coated NCA product finishing"]
+            A6_CA -->|"Coating-treatment off-gas"| A6_CG
+        end
+
+        subgraph A6_S6["6 — FINAL CAM PRODUCTS"]
+            direction TB
+
+            A6_UQC -->|"Finished uncoated NCA"| A6_UP["NCA CAM - UNCOATED"]
+            A6_CQC -->|"Finished coated NCA"| A6_COP["NCA CAM - SURFACE COATED"]
+        end
+
+        A6_O2["Oxygen atmosphere"] --> A6_HC1
+        A6_O2 --> A6_HC2
+        A6_O2 --> A6_CC1
+        A6_O2 --> A6_CC2
+
+        A6_HCO -->|"NCA oxide from hydroxide route"| A6_NCA
+        A6_CCO -->|"NCA oxide from carbonate route"| A6_NCA
+    end
+
+    %% ============================================================
+    %% TIER 7 — ELECTRODE AND BATTERY CELL MANUFACTURING
+    %% ============================================================
+
+    subgraph C7_MAP["TIER 7 — ELECTRODE AND BATTERY CELL MANUFACTURING"]
+        direction TB
+
+        subgraph C7_T7A["7A — ELECTRODE MANUFACTURING"]
+            direction TB
+
+            %% Cathode inputs
+            C7_NMC["NMC CAM - Tier 6"]
+            C7_NCA["NCA CAM - Tier 6"]
+
+            C7_CARB["Conductive carbon"]
+            C7_PVDF["PVDF binder"]
+            C7_NMP["NMP solvent"]
+
+            C7_PVDF --> C7_BP["Cathode binder solution preparation"]
+            C7_NMP --> C7_BP
+
+            %% NMC Cathode
+            C7_NMC --> C7_NM["NMC slurry mixing and dispersion"]
+            C7_CARB --> C7_NM
+            C7_BP --> C7_NM
+
+            C7_NM -->|"NMC cathode slurry"| C7_NCO["NMC slurry coating"]
+            C7_AL["Aluminium foil"] --> C7_NCO
+            C7_NCO -->|"Wet NMC-coated aluminium foil"| C7_ND["Convective drying"]
+            C7_ND -->|"Dry NMC-coated foil"| C7_NC["Calendering"]
+            C7_NC -->|"Compacted electrode web"| C7_NS["Slitting and edge cleaning"]
+            C7_NS -->|"NMC electrode coils"| C7_NV["Vacuum drying"]
+            C7_NV -->|"Dried NMC electrode"| C7_NO["NMC CATHODE ELECTRODE"]
+
+            %% NCA Cathode
+            C7_NCA --> C7_AM["NCA slurry mixing and dispersion"]
+            C7_CARB --> C7_AM
+            C7_BP --> C7_AM
+
+            C7_AM -->|"NCA cathode slurry"| C7_ACO["NCA slurry coating"]
+            C7_AL --> C7_ACO
+            C7_ACO -->|"Wet NCA-coated aluminium foil"| C7_AD["Convective drying"]
+            C7_AD -->|"Dry NCA-coated foil"| C7_AC["Calendering"]
+            C7_AC -->|"Compacted electrode web"| C7_AS["Slitting and edge cleaning"]
+            C7_AS -->|"NCA electrode coils"| C7_AV["Vacuum drying"]
+            C7_AV -->|"Dried NCA electrode"| C7_AO["NCA CATHODE ELECTRODE"]
+
+            %% Graphite anode
+            C7_GR["Graphite anode active material"]
+            C7_CMC["CMC binder"]
+            C7_SBR["SBR binder"]
+            C7_WATER["Deionised water"]
+
+            C7_GR --> C7_GM["Graphite slurry mixing and dispersion"]
+            C7_CMC --> C7_GM
+            C7_SBR --> C7_GM
+            C7_WATER --> C7_GM
+
+            C7_GM -->|"Graphite anode slurry"| C7_GCO["Anode slurry coating"]
+            C7_CU["Copper foil"] --> C7_GCO
+            C7_GCO -->|"Wet graphite-coated copper foil"| C7_GD["Convective drying"]
+            C7_GD -->|"Dry anode-coated foil"| C7_GC["Calendering"]
+            C7_GC -->|"Compacted anode web"| C7_GS["Slitting and edge cleaning"]
+            C7_GS -->|"Anode electrode coils"| C7_GV["Vacuum drying"]
+            C7_GV -->|"Dried graphite electrode"| C7_GO["GRAPHITE ANODE ELECTRODE"]
+
+            %% Side streams
+            C7_ND -->|"NMP-bearing exhaust"| C7_CAP["Solvent vapour collection"]
+            C7_AD -->|"NMP-bearing exhaust"| C7_CAP
+            C7_CAP --> C7_COND["NMP condensation / recovery"]
+            C7_COND --> C7_PUR["Solvent purification and quality control"]
+            C7_PUR -.->|"Qualified recovered NMP"| C7_BP
+
+            C7_GD -->|"Water-rich exhaust"| C7_EX["Exhaust handling"]
+
+            C7_NS -->|"Cathode trim and dust"| C7_SCRAP["Electrode scrap segregation"]
+            C7_AS -->|"Cathode trim and dust"| C7_SCRAP
+            C7_GS -->|"Anode trim and dust"| C7_SCRAP
+            C7_SCRAP --> C7_SR["Scrap recovery / treatment"]
+        end
+
+        subgraph C7_T7B["7B — BATTERY CELL ASSEMBLY"]
+            direction TB
+
+            %% Chemistry-specific cathode selection
+            C7_NO --> C7_CH["Cathode chemistry selection - NMC OR NCA"]
+            C7_AO --> C7_CH
+
+            C7_CH -->|"Selected cathode electrode coils"| C7_CUT["Cathode sheet cutting / notching"]
+            C7_CH -->|"Selected cathode electrode web"| C7_ROLL["Cathode winding-web preparation"]
+
+            C7_GO -->|"Graphite anode coils"| C7_ACUT["Anode sheet cutting / notching"]
+            C7_GO -->|"Graphite anode web"| C7_AROLL["Anode winding-web preparation"]
+
+            C7_SEP["Separator membrane"]
+
+            %% Stacking
+            C7_CUT -->|"Cathode sheets"| C7_ST["Electrode stacking / Z-folding"]
+            C7_ACUT -->|"Anode sheets"| C7_ST
+            C7_SEP -->|"Separator sheets / web"| C7_ST
+
+            C7_ST -->|"Cathode-separator-anode stack"| C7_SS["Stack securing and alignment"]
+
+            %% Winding
+            C7_ROLL -->|"Cathode web"| C7_WD["Electrode and separator winding"]
+            C7_AROLL -->|"Anode web"| C7_WD
+            C7_SEP -->|"Separator web"| C7_WD
+
+            C7_WD -->|"Wound electrode assembly"| C7_WS["Jelly-roll securing and alignment"]
+
+            %% Pouch cell
+            C7_SS -->|"Stack for pouch cell"| C7_PT["Tab joining / ultrasonic welding"]
+            C7_TAB["Current collector tabs"] --> C7_PT
+
+            C7_PT -->|"Electrically connected stack"| C7_PH["Pouch forming and stack insertion"]
+            C7_PF["Aluminium-laminate pouch film"] --> C7_PH
+
+            C7_PH -->|"Inserted electrode stack"| C7_PSEAL["Partial pouch heat sealing"]
+            C7_PSEAL -->|"Pouch with filling opening"| C7_PPRE["POUCH CELL ASSEMBLY"]
+
+            %% Cylindrical cell
+            C7_WS -->|"Jelly roll"| C7_CT["Tab / terminal joining"]
+            C7_TAB --> C7_CT
+
+            C7_CT -->|"Connected jelly roll"| C7_CHOUS["Jelly-roll insertion and insulation"]
+            C7_CAN["Cylindrical metal can and insulation"] --> C7_CHOUS
+
+            C7_CHOUS -->|"Inserted jelly roll"| C7_CLID["Lid / terminal joining"]
+            C7_CLID -->|"Cell can with filling access"| C7_CPRE["CYLINDRICAL CELL ASSEMBLY"]
+
+            %% Prismatic cell
+            C7_SS -->|"Stacked electrode assembly"| C7_RT_PRISM["Prismatic tab joining"]
+            C7_WS -->|"Flat-wound assembly - alternative"| C7_RT_PRISM
+            C7_TAB --> C7_RT_PRISM
+
+            C7_RT_PRISM -->|"Electrically connected assembly"| C7_RH["Prismatic enclosure insertion"]
+            C7_CASE["Prismatic housing and insulation"] --> C7_RH
+
+            C7_RH -->|"Inserted electrode assembly"| C7_RW["Cap assembly welding"]
+            C7_RW -->|"Housing with filling opening"| C7_RPRE["PRISMATIC CELL ASSEMBLY"]
+
+            %% Electrolyte
+            C7_ELY["Liquid lithium-ion electrolyte"]
+
+            C7_PPRE --> C7_PFILL["Pouch electrolyte dosing"]
+            C7_ELY --> C7_PFILL
+            C7_PFILL -->|"Electrolyte-filled pouch assembly"| C7_PWET["Electrolyte wetting"]
+            C7_PWET -->|"Wetted pouch assembly"| C7_PCLOSE["Temporary pouch closure / gas-pocket provision"]
+            C7_PCLOSE --> C7_PO["ASSEMBLED POUCH CELL"]
+
+            C7_CPRE --> C7_CFILL["Cylindrical electrolyte dosing"]
+            C7_ELY --> C7_CFILL
+            C7_CFILL -->|"Electrolyte-filled cylindrical assembly"| C7_CWET["Electrolyte wetting"]
+            C7_CWET -->|"Wetted cylindrical assembly"| C7_CCLOSE["Crimping / final closure"]
+            C7_CCLOSE --> C7_CO["ASSEMBLED CYLINDRICAL CELL"]
+
+            C7_RPRE --> C7_RFILL["Prismatic electrolyte dosing"]
+            C7_ELY --> C7_RFILL
+            C7_RFILL -->|"Electrolyte-filled prismatic assembly"| C7_RWET["Electrolyte wetting"]
+            C7_RWET -->|"Wetted prismatic assembly"| C7_RCLOSE["Filling-port closure"]
+            C7_RCLOSE --> C7_RO["ASSEMBLED PRISMATIC CELL"]
+        end
+
+        subgraph C7_T7C["7C — CELL FORMATION AND FINISHING"]
+            direction TB
+
+            %% Convergence of formats
+            C7_PO --> C7_ENTRY["Cell finishing - format-specific handling"]
+            C7_CO --> C7_ENTRY
+            C7_RO --> C7_ENTRY
+
+            C7_ENTRY -->|"Electrolyte-filled cell"| C7_WET["Electrolyte wetting verification"]
+
+            C7_WET -->|"Additional conditioning required"| C7_SOAK["Optional elevated-temperature soaking"]
+            C7_WET -->|"Adequately wetted"| C7_READY["Cell ready for formation"]
+            C7_SOAK -->|"Conditioned cell"| C7_READY
+
+            %% Formation
+            C7_READY --> C7_FC["Formation protocol selection"]
+
+            C7_POWER["Controlled electrical energy"]
+
+            C7_FC -->|"Interrupted formation route"| C7_PRE["Initial pre-charging"]
+            C7_POWER --> C7_PRE
+
+            C7_PRE -->|"Partially formed cell"| C7_INT["Interim degassing - applicable designs"]
+            C7_INT -->|"Cell after gas removal"| C7_TOP["Optional electrolyte replenishment / resealing"]
+
+            C7_TOP -->|"Reconditioned cell"| C7_CY["Formation charge-discharge cycling"]
+
+            C7_FC -->|"Conventional route"| C7_CY
+            C7_POWER --> C7_CY
+
+            C7_CY -->|"Electrochemically formed cell"| C7_POST["Post-formation handling"]
+
+            %% Post-formation degassing
+            C7_POST -->|"Degassing required"| C7_DG["Gas extraction under vacuum"]
+            C7_DG -->|"Cell after gas removal"| C7_SEA["Final sealing / resealing"]
+            C7_SEA -->|"Finalised enclosure"| C7_DONE["Cell ready for aging"]
+
+            C7_POST -->|"No separate degassing required"| C7_DONE
+
+            C7_INT -->|"Formation gases"| C7_GCOL["Gas collection / exhaust treatment"]
+            C7_DG -->|"Formation gases"| C7_GCOL
+            C7_DG -->|"Removed pouch gas pocket - where applicable"| C7_WASTE["Pouch waste management"]
+
+            %% Aging
+            C7_DONE -->|"Elevated-temperature aging route"| C7_HT["High-temperature aging"]
+            C7_DONE -->|"Direct ambient aging route"| C7_RT_AGING["Room-temperature aging"]
+            C7_HT -->|"Conditioned cell"| C7_RT_AGING
+
+            C7_RT_AGING -->|"Aged cell"| C7_OCV["Open-circuit voltage monitoring"]
+
+            %% Quality control
+            C7_OCV -->|"Acceptable self-discharge"| C7_TEST["End-of-line testing"]
+
+            C7_TEST -->|"Cell performance data"| C7_GRADE["Cell grading and classification"]
+
+            C7_GRADE -->|"Cell meeting specifications"| C7_SOC["Shipping state-of-charge adjustment"]
+            C7_GRADE -->|"Rejected cell"| C7_REJECT["Cell quarantine and recovery assessment"]
+
+            C7_SOC -->|"Qualified battery cell"| C7_PACK["Final packaging and labelling"]
+
+            C7_PACK -->|"NMC chemistry retained"| C7_NMCO["FINISHED NMC BATTERY CELL"]
+            C7_PACK -->|"NCA chemistry retained"| C7_NCAO["FINISHED NCA BATTERY CELL"]
+        end
+    end
+
+    %% ============================================================
+    %% TIER 8 — BATTERY MODULE AND BATTERY PACK MANUFACTURING
+    %% ============================================================
+
+    subgraph P8_MAP["TIER 8 — BATTERY MODULE AND PACK MANUFACTURING"]
+        direction TB
+
+        subgraph P8_S1["1 — BATTERY CELL RECEIVING AND PREPARATION"]
+            direction TB
+
+            P8_NMC["Finished NMC battery cells - Tier 7"]
+            P8_NCA["Finished NCA battery cells - Tier 7"]
+
+            P8_NMC --> P8_REC["Cell receiving and identification"]
+            P8_NCA --> P8_REC
+
+            P8_REC -->|"Received battery cells"| P8_ID["Barcode / serial number scanning and traceability"]
+
+            P8_ID -->|"Identified cells"| P8_BOL["Beginning-of-line inspection and testing"]
+
+            P8_BOL -->|"Defective / non-conforming cells"| P8_REJ["Cell quarantine and recovery assessment"]
+
+            P8_BOL -->|"Accepted battery cells"| P8_SORT["Cell sorting and electrical matching"]
+
+            P8_SORT -->|"Matched cells in separate chemistry batches"| P8_SEL["Battery architecture and cell-format selection"]
+        end
+
+        subgraph P8_S2["2 — BATTERY MODULE MANUFACTURING"]
+            direction TB
+
+            %% Flat cells
+            P8_SEL -->|"CTM - pouch / prismatic cells"| P8_FP["Cell surface preparation and tab shaping"]
+
+            P8_ADH["Adhesives and insulating intercellular pads"] --> P8_FP
+
+            P8_FP -->|"Prepared flat cells"| P8_ST["Cell stacking and alignment"]
+
+            P8_FRAME["Cell frames / retaining elements - optional"] --> P8_ST
+
+            P8_ST -->|"Aligned cell stack"| P8_TEN["Cell stack tensioning and compression"]
+
+            P8_TEN -->|"Secured compressed stack"| P8_GRP["Secured cell assembly"]
+
+            %% Cylindrical
+            P8_SEL -->|"CTM - cylindrical cells"| P8_CY["Cell insertion into lower cell trays"]
+
+            P8_TRAY["Cell holders and tray components"] --> P8_CY
+
+            P8_CY -->|"Positioned cylindrical cells"| P8_FIX["Cell fixation and curing - as required"]
+
+            P8_FILL["Adhesives or functional gap fillers - optional"] --> P8_FIX
+
+            P8_FIX -->|"Secured cylindrical group"| P8_GRP
+
+            %% Contact preparation
+            P8_GRP -->|"Secured cell assembly"| P8_CLN["Electrical contact surface cleaning"]
+
+            P8_CLN -->|"Clean cell contact surfaces"| P8_POS["Busbar / cell-connector positioning"]
+
+            P8_BUS["Busbars and cell connectors"] --> P8_POS
+
+            P8_POS -->|"Positioned electrical connectors"| P8_JOIN["Electrical contacting and joining"]
+
+            P8_JOIN -->|"Connected cell assembly"| P8_INS["Weld / joint inspection and resistance testing"]
+
+            P8_INS -->|"Accepted electrical connections"| P8_MH["Module mechanical and thermal integration"]
+
+            P8_INS -->|"Non-conforming joints"| P8_JREJ["Joint inspection / rework assessment"]
+
+            P8_HOUS["Module housing and structural supports"] --> P8_MH
+            P8_THM["Insulating materials, thermal pads and fillers"] --> P8_MH
+
+            P8_MH -->|"Mechanically integrated cell module"| P8_PCB["BMS slave circuit-board installation"]
+
+            P8_BPCB["BMS slave board / contacting unit"] --> P8_PCB
+
+            P8_PCB -->|"Installed monitoring electronics"| P8_SEN["Voltage and temperature sensor connection"]
+
+            P8_SENS["Sensors and measurement leads"] --> P8_SEN
+
+            P8_SEN -->|"Instrumented battery module"| P8_CAB["Module power / communication harness assembly"]
+
+            P8_CAB -->|"Wired module"| P8_CLOSE["Module cover attachment and sealing"]
+
+            P8_MC["Module cover, seals and fasteners"] --> P8_CLOSE
+
+            P8_CLOSE -->|"Enclosed battery module"| P8_MEOL["Module end-of-line functional testing"]
+
+            P8_MEOL -->|"Non-conforming module"| P8_MREJ["Module rework / recovery assessment"]
+
+            P8_MEOL -->|"Qualified battery module"| P8_MOUT["FINISHED BATTERY MODULE"]
+
+            P8_MOUT -->|"Independent product"| P8_MSHIP["Module labelling and shipment"]
+        end
+
+        subgraph P8_S3["3 — CONVENTIONAL MODULE-TO-PACK MANUFACTURING"]
+            direction TB
+
+            P8_MOUT -->|"Module-to-pack route"| P8_MP["Qualified module positioning"]
+
+            P8_PCASE["Battery pack housing"] --> P8_HP["Pack housing and cooling-base preparation"]
+
+            P8_COOL["Cooling plates / cooling hardware"] --> P8_HP
+
+            P8_TIM["Thermal interface materials / gap fillers"] --> P8_HP
+
+            P8_HP -->|"Prepared pack enclosure"| P8_MP
+
+            P8_MP -->|"Positioned battery modules"| P8_MF["Module fastening and fixation"]
+
+            P8_FAST["Bolts, brackets and adhesives"] --> P8_MF
+
+            P8_MF -->|"Secured module-containing pack"| P8_TM["Thermal management unit and coolant-circuit integration"]
+
+            P8_TUNIT["Thermal management unit, hoses, valves and fittings"] --> P8_TM
+
+            P8_TM -->|"Pack with thermal interfaces"| P8_HV["High-voltage distribution and protection assembly"]
+
+            P8_HVC["HV busbars, cables, fuses, contactors and protection components"] --> P8_HV
+
+            P8_HV -->|"HV-connected modules"| P8_LV["Low-voltage harness and sensing integration"]
+
+            P8_LVC["Low-voltage harnesses and signal connectors"] --> P8_LV
+
+            P8_LV -->|"Wired battery pack"| P8_BM["BMS master installation and electrical connection"]
+
+            P8_BMM["BMS master controller"] --> P8_BM
+
+            P8_BM -->|"Controlled and monitored battery pack"| P8_PORT["External HV, LV and thermal interface installation"]
+
+            P8_PORT -->|"Integrated battery pack subassembly"| P8_SEAL["Pack cover installation and sealing"]
+
+            P8_PCOV["Pack cover, gaskets, pressure-relief components and sealants"] --> P8_SEAL
+
+            P8_SEAL -->|"Closed battery pack"| P8_LEAK["Housing and applicable cooling-circuit leak testing"]
+
+            P8_LEAK -->|"Leak-tested battery pack"| P8_FLASH["BMS software flashing and configuration"]
+
+            P8_FLASH -->|"Configured battery pack"| P8_SOC["Battery pack state-of-charge adjustment"]
+
+            P8_SOC -->|"Conditioned battery pack"| P8_PEOL["Pack end-of-line electrical, functional and safety testing"]
+
+            P8_PEOL -->|"Non-conforming pack"| P8_PREJ["Pack rework / recovery assessment"]
+
+            P8_PEOL -->|"Approved CTM battery pack"| P8_CTMOUT["CTM BATTERY PACK"]
+        end
+
+        subgraph P8_S4["4 — DIRECT CELL-TO-PACK MANUFACTURING"]
+            direction TB
+
+            P8_SEL -->|"Module-free CTP design - BMW Gen6 example"| P8_DCL["Direct cell clustering and cooling-interface integration"]
+
+            P8_DCOOL["Cooling interfaces and insulation components"] --> P8_DCL
+
+            P8_DCL -->|"Cell clusters"| P8_DPREP["Cell contact and connector laser cleaning"]
+
+            P8_DPREP -->|"Cleaned cell contact system"| P8_DWELD["Laser welding and inline weld inspection"]
+
+            P8_DWELD -->|"Electrically connected cell cluster"| P8_FOAM["Foam application and mechanical consolidation"]
+
+            P8_FM["Structural / protective foam"] --> P8_FOAM
+
+            P8_FOAM -->|"Mechanically integrated cell assembly"| P8_DCLOSE["Pack housing closure, sealing and riveting"]
+
+            P8_DH["CTP enclosure and sealing components"] --> P8_DCLOSE
+
+            P8_DCLOSE -->|"Closed direct-cell pack"| P8_MASTER["Energy Master control-unit installation"]
+
+            P8_EM["Energy Master controller and sealing adhesive"] --> P8_MASTER
+
+            P8_MASTER -->|"Electronically integrated CTP pack"| P8_DEOL["CTP pack end-of-line quality, safety and function testing"]
+
+            P8_DEOL -->|"Non-conforming pack"| P8_DREJ["CTP pack rework / recovery assessment"]
+
+            P8_DEOL -->|"Approved direct CTP battery pack"| P8_CTPOUT["CTP BATTERY PACK"]
+        end
+
+        subgraph P8_S5["5 — FINAL TIER 8 OUTPUTS"]
+            direction TB
+
+            P8_CTMOUT -->|"Conventional pack product"| P8_POUT["FINISHED BATTERY PACK"]
+            P8_CTPOUT -->|"Direct cell-to-pack product"| P8_POUT
+
+            P8_POUT -->|"Approved battery pack"| P8_LAB["Pack labelling and preparation for delivery"]
+
+            P8_LAB -->|"Battery pack for vehicle integration"| P8_NEXT["TIER 9 — ELECTRIC VEHICLE INTEGRATION"]
+        end
+    end
+
+    %% ============================================================
+    %% TIER 9 — ELECTRIC VEHICLE INTEGRATION
+    %% ============================================================
+
+    subgraph E9_MAP["TIER 9 — ELECTRIC VEHICLE INTEGRATION"]
+        direction TB
+
+        subgraph E9_S1["1 — BATTERY PACK RECEIVING AND VEHICLE PREPARATION"]
+            direction TB
+
+            E9_NMC["Finished NMC battery pack - Tier 8"]
+            E9_NCA["Finished NCA battery pack - Tier 8"]
+
+            E9_NMC --> E9_REC["Battery pack receiving and identification"]
+            E9_NCA --> E9_REC
+
+            E9_REC -->|"Received finished battery pack"| E9_LOG["Battery pack transportation to vehicle assembly station"]
+
+            E9_LOG -->|"Battery pack ready for installation"| E9_ID["Battery identification and installation readiness checks"]
+
+            E9_ID -->|"Accepted and identified pack"| E9_ARCH["Vehicle battery integration architecture"]
+
+            E9_ID -->|"Non-conforming battery pack"| E9_REJ["Battery pack quarantine / assessment"]
+
+            E9_BODY["Painted vehicle body shell"]
+            E9_AXLE["Front and rear chassis / axle assemblies"]
+            E9_MOTOR["Electric drive motor / e-axle assemblies"]
+
+            E9_AXLE --> E9_CHASSIS["Vehicle chassis and powertrain subassembly"]
+            E9_MOTOR --> E9_CHASSIS
+        end
+
+        subgraph E9_S2["2A — CONVENTIONAL BATTERY PACK INTEGRATION"]
+            direction TB
+
+            E9_ARCH -->|"Conventional underfloor battery architecture"| E9_ROBOT["Robotic battery pack positioning"]
+
+            E9_CHASSIS -->|"Prepared chassis frame"| E9_ROBOT
+
+            E9_ROBOT -->|"Battery pack positioned on chassis frame"| E9_CINT["Front-rear cable channel and system integration"]
+
+            E9_HVH["High-voltage power harnesses"] --> E9_CINT
+            E9_LVH["Vehicle communication harnesses"] --> E9_CINT
+            E9_CL["Cooling lines and connectors"] --> E9_CINT
+            E9_BL["Brake lines / chassis fluid connections"] --> E9_CINT
+
+            E9_CINT -->|"Connected chassis and battery subassembly"| E9_CP["Electric drive and charging connections"]
+
+            E9_SOCKET["Vehicle charge inlet / charging socket"] --> E9_CP
+
+            E9_CP -->|"Chassis with electrical and cooling connections"| E9_WED["Chassis-to-body marriage"]
+
+            E9_BODY -->|"Prepared vehicle body"| E9_WED
+
+            E9_WED -->|"Joined body and chassis"| E9_BOLT["Battery-to-body and chassis fastening"]
+
+            E9_FAST["Structural fasteners / mounting components"] --> E9_BOLT
+
+            E9_BOLT -->|"Mechanically integrated vehicle battery system"| E9_COUT["Conventional battery-installed vehicle"]
+        end
+
+        subgraph E9_S3["2B — STRUCTURAL PACK-TO-OPEN-BODY INTEGRATION"]
+            direction TB
+
+            E9_ARCH -->|"Structural battery architecture - BMW Neue Klasse example"| E9_SAL["Structural battery positioning and alignment"]
+
+            E9_BODY -->|"Compatible open-body structure"| E9_SAL
+
+            E9_SAL -->|"Battery positioned at structural interface"| E9_SJ["Structural pack-to-body integration"]
+
+            E9_SJ -->|"Battery integrated into body structure"| E9_SC["Vehicle chassis and drivetrain interface integration"]
+
+            E9_CHASSIS -->|"Vehicle chassis / powertrain assemblies"| E9_SC
+
+            E9_SC -->|"Structurally integrated vehicle assembly"| E9_SI["Electrical and thermal interface completion"]
+
+            E9_SHV["Vehicle HV / LV electrical interfaces"] --> E9_SI
+            E9_SCL["Vehicle cooling and thermal connections"] --> E9_SI
+
+            E9_SI -->|"Connected structural battery system"| E9_SOUT["Structural battery-integrated vehicle"]
+        end
+
+        subgraph E9_S4["3 — BATTERY AND VEHICLE INTERFACE VERIFICATION"]
+            direction TB
+
+            E9_COUT -->|"Conventional battery-installed vehicle"| E9_VERIFY["Mechanical and system interface verification"]
+            E9_SOUT -->|"Structural battery-integrated vehicle"| E9_VERIFY
+
+            E9_VERIFY -->|"Installed battery and checked interfaces"| E9_WIRE["Electrical wiring and connector inspection"]
+
+            E9_WIRE -->|"Verified HV / LV connections"| E9_COOL["Vehicle cooling circuit preparation"]
+        end
+
+        subgraph E9_S5["4 — COOLANT FILLING AND THERMAL CIRCUIT TESTING"]
+            direction TB
+
+            E9_COOL --> E9_METHOD["Coolant filling procedure selection"]
+
+            E9_METHOD -->|"Vacuum / pressure-fill process"| E9_VAC["Cooling-circuit vacuum evacuation and leak check"]
+
+            E9_VAC -->|"Evacuated and checked circuit"| E9_FILL["Automated coolant filling"]
+
+            E9_GLY["Specified vehicle coolant / glycol mixture"] --> E9_FILL
+
+            E9_FILL -->|"Coolant-filled circuit"| E9_PTEST["Fluid pressure leak testing"]
+
+            E9_PTEST -->|"Verified cooling circuit"| E9_LEVEL["Coolant level adjustment and filling-tool removal"]
+
+            E9_METHOD -->|"Alternative volumetric filling"| E9_VOL["Automated volumetric coolant filling"]
+
+            E9_GLY --> E9_VOL
+            E9_VOL -->|"Filled coolant circuit"| E9_LEVEL
+
+            E9_LEVEL -->|"Coolant-filled vehicle"| E9_TCHK["Cooling-system completion and functional verification"]
+
+            E9_PTEST -->|"Leak detected"| E9_LREJ["Cooling circuit repair and retest"]
+        end
+
+        subgraph E9_S6["5 — SOFTWARE COMMISSIONING AND ELECTRICAL ACTIVATION"]
+            direction TB
+
+            E9_TCHK -->|"Vehicle with completed thermal circuit"| E9_SW["Vehicle control-unit software commissioning"]
+
+            E9_DATA["Vehicle configuration data / control software"] --> E9_SW
+
+            E9_SW -->|"Configured vehicle control units"| E9_MATCH["Battery identity and parameter verification"]
+
+            E9_MATCH -->|"Correct battery configuration"| E9_COMM["Vehicle communication and system checks"]
+
+            E9_COMM -->|"Connections and parameters validated"| E9_ENABLE["High-voltage system enabling"]
+
+            E9_ENABLE -->|"Permitted activation"| E9_CONTACT["Battery HV contactor closure"]
+
+            E9_CONTACT -->|"HV battery connected to vehicle network"| E9_START["First vehicle electrical start-up"]
+
+            E9_MATCH -->|"Configuration mismatch"| E9_QREJ["Software / configuration correction"]
+        end
+
+        subgraph E9_S7["6 — FINAL VEHICLE INSPECTION AND TESTING"]
+            direction TB
+
+            E9_START -->|"Powered vehicle"| E9_FUNC["Electrical and vehicle function testing"]
+
+            E9_FUNC -->|"Operational vehicle"| E9_GEO["Visual / geometric quality inspection"]
+
+            E9_GEO -->|"Vehicle passing static checks"| E9_DRIVE["First self-powered movement / final dynamic checks"]
+
+            E9_DRIVE -->|"Vehicle test results"| E9_QC["Final quality assessment"]
+
+            E9_QC -->|"Non-conforming vehicle"| E9_VREJ["Vehicle rework and retesting"]
+
+            E9_QC -->|"Approved finished vehicle"| E9_RELEASE["Vehicle release and delivery preparation"]
+
+            E9_RELEASE -->|"NMC-equipped production configuration"| E9_EVNMC["FINISHED NMC-BASED ELECTRIC VEHICLE"]
+
+            E9_RELEASE -->|"NCA-equipped production configuration"| E9_EVNCA["FINISHED NCA-BASED ELECTRIC VEHICLE"]
+        end
+    end
+
+    %% ============================================================
+    %% CROSS-TIER MATERIAL CONNECTIONS
+    %% Added links only — no original process operations removed
+    %% ============================================================
+
+    %% Stratiform Cu-Co deposits -> Tier 4
+    SC_COH -->|"Cobalt hydroxide feed"| R4_A1
+    SC_ALLOY -->|"Co-Cu-Fe alloy feed"| R4_B1
+
+    %% Ni-Co laterites -> Tier 4
+    LA_MHPO -->|"MHP feed"| R4_C1
+    LA_MSPO -->|"MSP feed"| R4_D1
+    LA_ELU -->|"Ni-Co-rich sulfate eluate"| R4_E1
+    LA_PURE -->|"Purified Ni-Co-bearing solution"| R4_G1
+
+    %% Magmatic Ni-Cu-Co sulfides -> Tier 4
+    MG_CM -->|"Ni-Cu-Co converter matte"| R4_F1
+    MG_LIQ -->|"Ni-Co-rich sulfate liquor"| R4_E1
+    MG_PURE -->|"Purified Ni-Co-bearing solution"| R4_G1
+
+    %% Tier 4 -> Tier 5 NMC
+    R4_P5 -->|"Battery-grade cobalt sulfate"| N5_CO
+    R4_NP -->|"Nickel sulfate product"| N5_NI
+
+    %% Tier 4 -> Tier 5 NCA
+    R4_P5 -->|"Battery-grade cobalt sulfate"| A5_CO
+    R4_NP -->|"Nickel sulfate product"| A5_NI
+
+    %% Tier 5 NMC -> Tier 6 NMC
+    N5_PROD -->|"NMC hydroxide pCAM"| N6_PC
+
+    %% Tier 5 NCA -> Tier 6 NCA
+    A5_HPROD -->|"NCA hydroxide pCAM"| A6_HP
+    A5_CPROD -->|"NCA carbonate-hydroxide pCAM"| A6_CP
+
+    %% Tier 6 NMC -> Tier 7
+    N6_PROD -->|"NMC CAM powder"| C7_NMC
+
+    %% Tier 6 NCA -> Tier 7
+    A6_UP -->|"Uncoated NCA CAM powder"| C7_NCA
+    A6_COP -->|"Surface-coated NCA CAM powder"| C7_NCA
+
+    %% Tier 7 -> Tier 8
+    C7_NMCO -->|"Finished NMC battery cells"| P8_NMC
+    C7_NCAO -->|"Finished NCA battery cells"| P8_NCA
+
+    %% Tier 8 -> Tier 9
+    %% Chemistry-specific alternatives from finished pack delivery
+    P8_NEXT -->|"NMC battery pack configuration"| E9_NMC
+    P8_NEXT -->|"NCA battery pack configuration"| E9_NCA
+
+    %% ============================================================
+    %% ORIGINAL COLOUR PALETTE
+    %% ============================================================
+
+    classDef feed fill:#e5efff,stroke:#668dcc,color:#17365d
+    classDef material fill:#e5efff,stroke:#668dcc,color:#17365d
+    classDef hub fill:#fff0d8,stroke:#c58a38,color:#654515
+    classDef product fill:#e2f2e7,stroke:#4b9365,color:#174b31
+    classDef output fill:#e2f2e7,stroke:#4b9365,color:#174b31
+    classDef waste fill:#f7e8e3,stroke:#b67b68,color:#713f31
+    classDef residue fill:#f7e8e3,stroke:#b67b68,color:#713f31
+
+    %% Stratiform Cu-Co styling
+    class SC_DEP,SC_OX,SC_SU,SC_MX,SC_SCON,SC_OXS,SC_OXCS,SC_SA,SC_RED,SC_FM,SC_MG,SC_CAR material
+    class SC_COH,SC_ALLOY,SC_CATH output
+    class SC_WR,SC_BT,SC_RT,SC_SR waste
+
+    %% Laterite styling
+    class LA_DEP,LA_LIM,LA_CLAY,LA_SAP,LA_HPF,LA_ALF,LA_PYF,LA_CF,LA_HLF,LA_H2,LA_AS,LA_LST,LA_MGO,LA_HS,LA_NC,LA_RD material
+    class LA_SOL hub
+    class LA_MHPO,LA_MSPO,LA_ELU,LA_PURE,LA_CCO,LA_NIO,LA_FENI,LA_CNI,LA_CCO2 product
+    class LA_W1,LA_R1,LA_R2,LA_TAIL,LA_WW,LA_IW,LA_SLG waste
+
+    %% Magmatic styling
+    class MG_DEP,MG_MASS,MG_SEMI,MG_DISS,MG_W,MG_REAG,MG_AC,MG_OX,MG_AIR feed
+    class MG_BCON,MG_NCON,MG_CCON,MG_BULK hub
+    class MG_CM,MG_CATH,MG_LIQ,MG_PURE product
+    class MG_WR,MG_PT,MG_NT,MG_SLAG,MG_GAS,MG_RES,MG_IW waste
+
+    %% Tier 4 styling
+    class R4_A1,R4_B1,R4_C1,R4_D1,R4_E1,R4_F1,R4_G1,R4_AW,R4_AH,R4_BW,R4_BA,R4_BO feed
+    class R4_MIX,R4_C8,R4_CO,R4_P1 hub
+    class R4_P5,R4_NP,R4_BC,R4_M3 product
+    class R4_AR,R4_AT,R4_BR,R4_CR,R4_DR,R4_FR,R4_CW,R4_C7 residue
+
+    %% Tier 5 NMC styling
+    class N5_CO,N5_NI,N5_MN,N5_DW,N5_NH,N5_PW,N5_NA,N5_W3,N5_CAU feed
+    class N5_CP,N5_ML hub
+    class N5_PROD,N5_BY product
+    class N5_VAP,N5_OFF,N5_RES,N5_EFF waste
+
+    %% Tier 5 NCA styling
+    class A5_CO,A5_NI,A5_AL,A5_DW,A5_NA,A5_PW,A5_NH,A5_CAR,A5_WH,A5_WC feed
+    class A5_HCP,A5_CCP,A5_LT hub
+    class A5_HPROD,A5_CPROD,A5_BP product
+    class A5_HV,A5_CV,A5_RT,A5_EFF,A5_HR,A5_CR waste
+
+    %% Tier 6 NMC styling
+    class N6_PC,N6_LI,N6_N2,N6_O2,N6_CW,N6_MAT feed
+    class N6_MX,N6_C1,N6_SEL,N6_C2 hub
+    class N6_PROD product
+    class N6_LV,N6_GAS,N6_OFF,N6_EFF,N6_VAP waste
+
+    %% Tier 6 NCA styling
+    class A6_HP,A6_CP,A6_LI,A6_O2,A6_BOR feed
+    class A6_HM,A6_CM,A6_HC1,A6_HC2,A6_CC1,A6_CC2,A6_NCA,A6_SEL,A6_CA hub
+    class A6_UP,A6_COP product
+    class A6_HG,A6_CG,A6_OFF waste
+
+    %% Tier 7 styling
+    class C7_NMC,C7_NCA,C7_GR,C7_CARB,C7_PVDF,C7_NMP,C7_CMC,C7_SBR,C7_WATER,C7_AL,C7_CU,C7_SEP,C7_TAB,C7_PF,C7_CAN,C7_CASE,C7_ELY,C7_POWER feed
+    class C7_CH,C7_ST,C7_WD,C7_FC,C7_POST,C7_GRADE hub
+    class C7_NO,C7_AO,C7_GO,C7_PO,C7_CO,C7_RO,C7_NMCO,C7_NCAO product
+    class C7_EX,C7_SCRAP,C7_SR,C7_GCOL,C7_WASTE,C7_REJECT waste
+
+    %% Tier 8 styling
+    class P8_NMC,P8_NCA,P8_ADH,P8_FRAME,P8_TRAY,P8_FILL,P8_BUS,P8_HOUS,P8_THM,P8_BPCB,P8_SENS,P8_MC,P8_PCASE,P8_COOL,P8_TIM,P8_FAST,P8_TUNIT,P8_HVC,P8_LVC,P8_BMM,P8_PCOV,P8_DCOOL,P8_FM,P8_DH,P8_EM feed
+    class P8_SEL,P8_JOIN,P8_INS,P8_PCB,P8_MP,P8_HV,P8_BM,P8_DWELD,P8_FOAM hub
+    class P8_MOUT,P8_CTMOUT,P8_CTPOUT,P8_POUT product
+    class P8_REJ,P8_JREJ,P8_MREJ,P8_PREJ,P8_DREJ waste
+
+    %% Tier 9 styling
+    class E9_NMC,E9_NCA,E9_BODY,E9_AXLE,E9_MOTOR,E9_HVH,E9_LVH,E9_CL,E9_BL,E9_SOCKET,E9_FAST,E9_SHV,E9_SCL,E9_GLY,E9_DATA feed
+    class E9_ARCH,E9_ROBOT,E9_WED,E9_SJ,E9_VERIFY,E9_METHOD,E9_MATCH,E9_CONTACT,E9_QC hub
+    class E9_EVNMC,E9_EVNCA product
+    class E9_REJ,E9_LREJ,E9_QREJ,E9_VREJ waste
